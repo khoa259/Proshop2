@@ -1,4 +1,5 @@
 import Category from '../model/category.js';
+import Product from '../models/product';
 
 export const list = async (req, res) => {
 	try {
@@ -21,10 +22,12 @@ export const create = async (req, res) => {
 	}
 }
 export const read = async (req, res) => {
+	const condition = { _id: req.params.id };
 	try {
 		const category = await Category.findOne({ _id: req.params.id }).exec();
+		const products = await Product.find({ category }).populate('category').select('-category').exec();
 		res.json({
-			 category
+			products,category
 		});
 	} catch (error) {
 		res.status(400).json({
