@@ -1,11 +1,16 @@
 import React from "react";
-
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import AdminLayout from "./layout/AdminLayout";
 const App = () => {
   return (
     <div>
-      <h1>test commit fe</h1>
+     <BrowserRouter>
+     <Routes>
+      <Route path="admin" element={<AdminLayout/>}>
+      </Route>
+     </Routes>
+     </BrowserRouter>
     </div>
   );
 };
-
 export default App;
