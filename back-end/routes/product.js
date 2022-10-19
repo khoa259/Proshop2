@@ -1,9 +1,19 @@
-import { Router } from "express";
-import { create, list, read, remove, update } from "../controller/product.js";
+
+import express from 'express';
+import { Router } from 'express';
+import upload from '../middleware/multer.js';
+import { create, update, remove, readAll, read } from '../controller/product.js'
 const router = Router();
-router.get('/products', list);
-router.get('/products/:id', read);
-router.post('/products', create);
-router.delete('/products/:id', remove);
-router.put('/products/:id', update);
+
+router.post(
+    '/',
+    create
+);
+router.get('/', readAll);
+router.get('/:productId', read);
+router.put(
+    '/:productId',
+    update
+);
+router.delete('/:productId', remove);
 export default router;
