@@ -1,9 +1,13 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom"
+import Header from "../src/Header"
 
 const App = () => {
   return (
     <div>
-      <h1>test commit fe</h1>
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
     </div>
   );
 };
