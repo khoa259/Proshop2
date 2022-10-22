@@ -1,5 +1,6 @@
 import Product from '../model/product.js';
 import fs from 'fs';
+import { json } from 'express';
 
 export const create = async (req, res) => {
     // const { filename } = req.file;
@@ -32,28 +33,23 @@ export const create = async (req, res) => {
     }
 };
 
-export const readAll = async (req, res) => {
-    try {
-        const products = await Product.find({}).populate(
-            'productCategory',
-            'category'
-        );
-
-        res.json({ products });
-    } catch (err) {
-        console.log(err, 'productController.readAll error');
-        res.status(500).json({
-            errorMessage: 'Please try again later',
-        });
-    }
-};
+export const list = async (req, res) => {
+    const search = req.query.search;
+       if (search) {
+        const product = await Product.find({productName: {$regex: search, $options: '$i'}})
+        res.json(product)
+        return
+       }
+       else{
+        console.log('err')
+       }
+}
 
 
 export const read = async (req, res) => {
     try {
         const productId = req.params.productId;
         const product = await Product.findById(productId);
-
         res.json(product);
     } catch (err) {
         console.log(err, 'productController.read error');
