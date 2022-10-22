@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node back-end/server",
     "server": "nodemon back-end/server --excec babel-node -e js",
-    "client": "npm start --prefix front-end",
+    "client": "npm run dev --prefix front-end",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
