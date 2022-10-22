@@ -34,10 +34,7 @@ export const create = async (req, res) => {
 
 export const readAll = async (req, res) => {
     try {
-        const products = await Product.find({}).populate(
-            'productCategory',
-            'category'
-        );
+        const products = await Product.find({}).exec();
 
         res.json({ products });
     } catch (err) {
@@ -88,15 +85,13 @@ export const remove = async (req, res) => {
     try {
         const productId = req.params.productId;
         const deletedProduct = await Product.findByIdAndDelete(productId);
-
-        fs.unlink(`uploads/${deletedProduct.fileName}`, err => {
-            if (err) throw err;
-            console.log(
-                'Image successfully deleted from filesystem: ',
-                deletedProduct.fileName
-            );
-        });
-
+        // fs.unlink(`uploads/${deletedProduct.fileName}`, err => {
+        //     if (err) throw err;
+        //     console.log(
+        //         'Image successfully deleted from filesystem: ',
+        //         deletedProduct.fileName
+        //     );
+        // });
         res.json(deletedProduct);
     } catch (err) {
         console.log(err, 'productController.delete error');
