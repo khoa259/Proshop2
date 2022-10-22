@@ -34,15 +34,19 @@ export const create = async (req, res) => {
 };
 
 export const list = async (req, res) => {
-    const search = req.query.search;
-       if (search) {
-        const product = await Product.find({productName: {$regex: search, $options: '$i'}})
-        res.json(product)
-        return
-       }
-       else{
-        console.log('err')
-       }
+    const page =  parseInt(req.query.page );
+	const limit =  parseInt(req.query.limit);
+	const skip =   limit * (page - 1) ;
+	const sort =  req.query.sort || '';
+    const search = req.query.search || '';
+    if (search || limit || skip || sort || sort) {
+        const products = await Product.find({productName: {$regex: search, $options: '$i'}}).limit(limit).sort(sort).skip(skip).exec();
+		res.json(products);
+    }
+	else{
+        const products = await Product.find().exec();
+        res.json(products)
+    }
 }
 
 
