@@ -13,7 +13,7 @@ const Breadcrumb = () => {
                     <h4>Shop</h4>
                     <div class="breadcrumb__links">
                         <a href="./index.html">Homee</a>
-                        <span>Shop</span>
+                        <span>Shopp</span>
                     </div>
                 </div>
             </div>
