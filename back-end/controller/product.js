@@ -39,13 +39,19 @@ export const list = async (req, res) => {
 	const skip =   limit * (page - 1) ;
 	const sort =  req.query.sort || '';
     const search = req.query.search || '';
-    if (search || limit || skip || sort || sort) {
-        const products = await Product.find({productName: {$regex: search, $options: '$i'}}).limit(limit).sort(sort).skip(skip).exec();
-		res.json(products);
-    }
-	else{
-        const products = await Product.find().exec();
-        res.json(products)
+    try {
+        if (search || limit || skip || sort || sort) {
+            const products = await Product.find({productName: {$regex: search, $options: '$i'}}).limit(limit).sort(sort).skip(skip).exec();
+            res.json(products);
+        }
+        else{
+            const products = await Product.find().exec();
+            res.json(products)
+        }
+    } catch (error) {
+        res.status(500).json({
+            errorMessage: 'Please try again later',
+        });
     }
 }
 
