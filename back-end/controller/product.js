@@ -49,7 +49,6 @@ export const list = async (req, res) => {
 			Product.countDocuments()
 		])
 		const count = await result[0] ? result[0].value : 0;
-		console.log(count);
 		res.json({products,count});
     }
 };
