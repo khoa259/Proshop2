@@ -46,8 +46,12 @@ export const list = async (req, res) => {
     }
     else{
         const products = await Product.find().sort(sort).exec();
-        console.log(products);
-        res.json(products)
+        const result = await Promise.allSettled([
+			Product.countDocuments()
+		])
+		const count = await result[0] ? result[0].value : 0;
+		console.log(count);
+		res.json({products,count});
     }
 }
 
