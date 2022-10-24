@@ -38,13 +38,14 @@ export const list = async (req, res) => {
     const limit = parseInt(req.query.limit);
     const page = parseInt(req.query.page);
     const skip =   limit * (page - 1) ;
+    const sort =  req.query.sort || '-createdAt' ;
     if (search || limit || page || skip) {
-        const products = await Product.find().limit(limit).skip(skip).exec();
+        const products = await Product.find({productName: {$regex: search, $options: '$i'}}).sort(sort).limit(limit).skip(skip).exec();
         res.json(products)
         return
     }
     else{
-        const products = await Product.find().exec();
+        const products = await Product.find().sort(sort).exec();
         console.log(products);
         res.json(products)
     }
