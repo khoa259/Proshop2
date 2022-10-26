@@ -9,8 +9,7 @@ const connectDB = async () => {
         useNewUrlParser: true,
       }
     );
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-    console.log("123123123");
+    console.log("connect mongo atlas success");
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);

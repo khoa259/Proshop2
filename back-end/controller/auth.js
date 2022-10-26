@@ -22,7 +22,7 @@ export const signupController = async (req, res) => {
     await newUser.save();
 
     res.json({
-      successMessage: "Registration success. Please signin.",
+      successMessage: "Register success. Please signin.",
     });
   } catch (err) {
     console.log("signupController error: ", err);
@@ -56,7 +56,7 @@ export const signinController = async (req, res) => {
       },
     };
 
-    jwt.sign(payload, { expiresIn: jwtExpire }, (err, token) => {
+    jwt.sign(payload, { expiresIn: "365" }, (err, token) => {
       if (err) console.log("jwt error: ", err);
       const { _id, username, email, role } = user;
 
