@@ -32,7 +32,7 @@ export const read = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({
-			error: "tim không thành công"
+			error: "tìm không thành công"
 		})
 	}
 }
@@ -44,7 +44,7 @@ export const update = async (req, res) => {
         });
 	} catch (error) {
 		res.status(400).json({
-			error: "tim không thành công"
+			error: "tìm không thành công"
 		})
 	}
 }
@@ -56,7 +56,7 @@ export const remove = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({
-			error: "tim không thành công"
+			error: "tìm không thành công"
 		})
 	}
 }
