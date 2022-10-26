@@ -1,10 +1,19 @@
 import React from "react";
-
+import { Routes, Route } from "react-router-dom"
+import AdminLayout from "./layout/AdminLayout";
+import WebsiteLayout from "./layout/WebsiteLayout";
+import Doashboard from "./pages/admin/Doashboard";
+import HomPage from "./pages/HomPage";
 const App = () => {
   return (
-    <div>
-      <h1 className="bg-red-500">Xưởng dự án</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<WebsiteLayout />}>
+        <Route index element={<HomPage />} />
+      </Route>
+      <Route path="admin" element={<AdminLayout />}>
+        <Route index element={<Doashboard />} />
+      </Route>
+    </Routes>
   );
 };
 
