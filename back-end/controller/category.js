@@ -13,6 +13,7 @@ export const list = async (req, res) => {
 	}
 }
 export const create = async (req, res) => {
+	console.log(req.body)
 	try {
 		const category = await new Category(req.body).save();
 		res.json(category);
