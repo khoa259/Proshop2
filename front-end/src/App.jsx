@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom"
 import AdminLayout from "./layout/AdminLayout";
 import WebsiteLayout from "./layout/WebsiteLayout";
 import AddBill from "./pages/admin/BillManage/AddBill";
+import EditBill from "./pages/admin/BillManage/EditBill";
 import ListBill from "./pages/admin/BillManage/ListBill";
 import Doashboard from "./pages/admin/Doashboard";
 import AddProduct from "./pages/admin/ProductManage/AddProduct";
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="bill">
           <Route index element={<ListBill />} />
           <Route path="addbill" element={<AddBill />} />
+          <Route path="editbill" element={<EditBill />} />
         </Route>
         <Route path="product">
           <Route index element={<ListProduct />} />
