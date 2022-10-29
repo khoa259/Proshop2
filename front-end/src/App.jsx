@@ -5,6 +5,7 @@ import WebsiteLayout from "./layout/WebsiteLayout";
 import AddBill from "./pages/admin/BillManage/AddBill";
 import EditBill from "./pages/admin/BillManage/EditBill";
 import ListBill from "./pages/admin/BillManage/ListBill";
+import AddCategory from "./pages/admin/CategoryManage/AddCategory";
 import ListCategory from "./pages/admin/CategoryManage/ListCategory";
 import Doashboard from "./pages/admin/Doashboard";
 import AddProduct from "./pages/admin/ProductManage/AddProduct";
@@ -27,6 +28,7 @@ const App = () => {
         </Route>
         <Route path="category">
           <Route index element={<ListCategory />} />
+          <Route path="addcategory" element={<AddCategory />} />
         </Route>
         <Route path="product">
           <Route index element={<ListProduct />} />
