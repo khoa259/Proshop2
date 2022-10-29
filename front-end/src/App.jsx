@@ -6,6 +6,7 @@ import AddBill from "./pages/admin/BillManage/AddBill";
 import EditBill from "./pages/admin/BillManage/EditBill";
 import ListBill from "./pages/admin/BillManage/ListBill";
 import AddCategory from "./pages/admin/CategoryManage/AddCategory";
+import EditCategory from "./pages/admin/CategoryManage/EditCategory";
 import ListCategory from "./pages/admin/CategoryManage/ListCategory";
 import Doashboard from "./pages/admin/Doashboard";
 import AddProduct from "./pages/admin/ProductManage/AddProduct";
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="category">
           <Route index element={<ListCategory />} />
           <Route path="addcategory" element={<AddCategory />} />
+          <Route path="editcategory" element={<EditCategory />} />
         </Route>
         <Route path="product">
           <Route index element={<ListProduct />} />
