@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddProduct = () => {
+const EditProduct = () => {
   return (
     <div>
         <div>
@@ -8,13 +8,13 @@ const AddProduct = () => {
     <div className="app-title">
       <ul className="app-breadcrumb breadcrumb">
         <li className="breadcrumb-item">Danh sách sản phẩm</li>
-        <li className="breadcrumb-item"><a href="#">Thêm sản phẩm</a></li>
+        <li className="breadcrumb-item"><a href="#">Cập nhật sản phẩm</a></li>
       </ul>
     </div>
     <div className="row">
       <div className="col-md-12">
         <div className="tile">
-          <h3 className="tile-title">Tạo mới sản phẩm</h3>
+          <h3 className="tile-title">Cập nhật sản phẩm</h3>
           <div className="tile-body">
             <div className="row element-button">
               <div className="col-sm-2">
@@ -173,4 +173,4 @@ MODAL
   )
 }
 
-export default AddProduct
+export default EditProduct
