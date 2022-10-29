@@ -32,6 +32,8 @@ const HeaderAdmin = () => {
                         <li><a className="app-menu__item" href="table-data-product.html"><i className="app-menu__icon bx bx-purchase-tag-alt" /><span className="app-menu__label">Quản lý sản phẩm</span></a>
                         </li>
                         <li><a className="app-menu__item" href="table-data-oder.html"><i className="app-menu__icon bx bx-task" /><span className="app-menu__label">Quản lý đơn hàng</span></a></li>
+                        <li><a className="app-menu__item" href="table-data-oder.html"><i className="app-menu__icon bx bx-category" /><span className="app-menu__label">Quản lý danh mục</span></a></li>
+
                         <li><a className="app-menu__item" href="table-data-banned.html"><i className="app-menu__icon bx bx-run" /><span className="app-menu__label">Quản lý nội bộ
                         </span></a></li>
                         <li><a className="app-menu__item" href="table-data-money.html"><i className="app-menu__icon bx bx-dollar" /><span className="app-menu__label">Bảng kê lương</span></a></li>
