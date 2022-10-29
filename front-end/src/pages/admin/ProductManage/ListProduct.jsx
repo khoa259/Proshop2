@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ListProduct = () => {
     return (
@@ -16,8 +17,10 @@ const ListProduct = () => {
                             <div className="tile-body">
                                 <div className="row element-button">
                                     <div className="col-sm-2">
-                                        <a className="btn btn-add btn-sm" href="form-add-san-pham.html" title="Thêm"><i className="fas fa-plus" />
+                                        <Link to="add">
+                                            <a className="btn btn-add btn-sm" href="form-add-san-pham.html" title="Thêm"><i className="fas fa-plus" />
                                             Tạo mới sản phẩm</a>
+                                        </Link>
                                     </div>
                                     <div className="col-sm-2">
                                         <a className="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i className="fas fa-file-upload" /> Tải từ file</a>
@@ -272,9 +275,11 @@ const ListProduct = () => {
                                             <td><span className="badge bg-success">Còn hàng</span></td>
                                             <td>14.500.000 đ</td>
                                             <td>Giường người lớn</td>
-                                            <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa" onclick="myFunction(this)"><i className="fas fa-trash-alt" />
+                                            <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa"><i className="fas fa-trash-alt" />
                                             </button>
-                                                <button className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></button>
+                                                <Link to=":id/edit">
+                                                    <button className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"><i className="fas fa-edit" /></button>
+                                                </Link>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -285,72 +290,6 @@ const ListProduct = () => {
                 </div>
             </main>
             {/* EndMain */}
-            <div className="modal fade" id="ModalUP" tabIndex={-1} role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                        <div className="modal-body">
-                            <div className="row">
-                                <div className="form-group  col-md-12">
-                                    <span className="thong-tin-thanh-toan">
-                                        <h5>Chỉnh sửa thông tin sản phẩm cơ bản</h5>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-group col-md-6">
-                                    <label className="control-label">Mã sản phẩm </label>
-                                    <input className="form-control" type="number" defaultValue={71309005} />
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label className="control-label">Tên sản phẩm</label>
-                                    <input className="form-control" type="text" required defaultValue="Bàn ăn gỗ Theresa" />
-                                </div>
-                                <div className="form-group  col-md-6">
-                                    <label className="control-label">Số lượng</label>
-                                    <input className="form-control" type="number" required defaultValue={20} />
-                                </div>
-                                <div className="form-group col-md-6 ">
-                                    <label htmlFor="exampleSelect1" className="control-label">Tình trạng sản phẩm</label>
-                                    <select className="form-control" id="exampleSelect1">
-                                        <option>Còn hàng</option>
-                                        <option>Hết hàng</option>
-                                        <option>Đang nhập hàng</option>
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label className="control-label">Giá bán</label>
-                                    <input className="form-control" type="text" defaultValue="5.600.000" />
-                                </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="exampleSelect1" className="control-label">Danh mục</label>
-                                    <select className="form-control" id="exampleSelect1">
-                                        <option>Bàn ăn</option>
-                                        <option>Bàn thông minh</option>
-                                        <option>Tủ</option>
-                                        <option>Ghế gỗ</option>
-                                        <option>Ghế sắt</option>
-                                        <option>Giường người lớn</option>
-                                        <option>Giường trẻ em</option>
-                                        <option>Bàn trang điểm</option>
-                                        <option>Giá đỡ</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <br />
-                            <a href="#" style={{ float: 'right', fontWeight: 600, color: '#ea0000' }}>Chỉnh sửa sản phẩm nâng cao</a>
-                            <br />
-                            <br />
-                            <button className="btn btn-save" type="button">Lưu lại</button>
-                            <a className="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-                            <br />
-                        </div>
-                        <div className="modal-footer">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
     )
 }
