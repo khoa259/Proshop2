@@ -2,10 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const ProductSchema = new mongoose.Schema(
     {
-        // fileName: {
-        //     type: 'String',
-        //     required: true,
-        // },
+        file: {
+            type: Object,
+            required: true,
+        },
         productName: {
             type: 'String',
             required: true,

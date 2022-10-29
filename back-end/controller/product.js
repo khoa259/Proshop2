@@ -1,30 +1,60 @@
 import Product from '../model/product.js';
 import fs from 'fs';
-import { json } from 'express';
+import cloudinary from "cloudinary";
+import { config } from "dotenv";
+config({ path: process.ENV })
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+})
+
+const removeTmp = (path) =>{
+    fs.unlink(path, err=>{
+        if(err) throw err;
+    })
+}
 
 export const create = async (req, res) => {
-    // const { filename } = req.file;
     const {
         productName,
         productDesc,
         productPrice,
         productQty,
+        productFile
     } = req.body;
-
     try {
+        if(!req.files || Object.keys(req.files).length === 0)
+            return res.status(400).json({msg: 'No files were uploaded.'})
+        
+        const file = req.files.file;
+        if(file.size > 1024*1024) {
+            removeTmp(file.tempFilePath)
+            return res.status(400).json({msg: "Size too large"})
+        }
+
+        if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png'){
+            removeTmp(file.tempFilePath)
+            return res.status(400).json({msg: "File format is incorrect."})
+        }
+    
+        const {url} = await cloudinary.v2.uploader.upload(file.tempFilePath,{folder:"test"}, async(err, result)=>{
+            if(err) throw err;
+
+            removeTmp(file.tempFilePath)
+
+            res.json({public_id: result.public_id, url: result.secure_url})
+            
+        })
         let product = new Product();
-        // product.fileName = filename;
+        product.fileName = productFile;
         product.productName = productName;
         product.productDesc = productDesc;
         product.productPrice = productPrice;
         product.productQty = productQty;
-
-        await product.save();
-
-        res.json({
-            successMessage: `${productName} was created`,
-            product,
-        });
+        product.file = url;
+        await product.save().then((res) => console.log(res)).catch((err) => console.log(err));
     } catch (err) {
         console.log(err, 'productController.create error');
         res.status(500).json({
@@ -34,6 +64,7 @@ export const create = async (req, res) => {
 };
 
 export const list = async (req, res) => {
+  try {
     const search = req.query.search;
     const limit = parseInt(req.query.limit);
     const page = parseInt(req.query.page);
@@ -45,7 +76,7 @@ export const list = async (req, res) => {
         return
     }
     else{
-        const products = await Product.find().sort(sort).exec();
+        const products = await Product.find().exec();
         const result = await Promise.allSettled([
 			Product.countDocuments()
 		])
@@ -53,6 +84,9 @@ export const list = async (req, res) => {
 		console.log(count);
 		res.json({products,count});
     }
+  } catch (error) {
+    return res.status(500).json({msg: error.message})
+  }
 }
 
 
