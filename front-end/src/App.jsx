@@ -12,7 +12,7 @@ import Doashboard from "./pages/admin/Doashboard";
 import AddProduct from "./pages/admin/ProductManage/AddProduct";
 import EditProduct from "./pages/admin/ProductManage/EditProduct";
 import ListProduct from "./pages/admin/ProductManage/ListProduct";
-// import Home from "./pages/client/Home";
+import Home from "./pages/client/Home";
 // import Shop from "./pages/client/Shop";
 // import Blog from "./pages/client/Blog";
 // import Cart from "./pages/client/Cart";
