@@ -17,7 +17,7 @@ import Shop from "./pages/client/Shop";
 import Blog from "./pages/client/Blog";
 import Cart from "./pages/client/Cart";
 import CheckOut from "./pages/client/CheckOut";
-// import Contact from "./pages/client/Contact";
+import Contact from "./pages/client/Contact";
 // import ShopDetail from "./pages/client/ShopDetail";
 // import Signin from "./pages/Signin";
 // import Signup from "./pages/Signup";
@@ -30,8 +30,8 @@ const App = () => {
           <Route path="cart" element={<Cart/>}  />
           <Route path="blog" element={<Blog/>}  />
           <Route path="checkout" element={<CheckOut/>}  />
-          {/* <Route path="products/detail" element={<ShopDetail/>}  />
           <Route path="contact" element={<Contact/>}  />
+          {/* <Route path="products/detail" element={<ShopDetail/>}  />
           <Route path="login" element={<Signin/>}  />
           <Route path="signup" element={<Signup/>}  /> */}
       </Route>
