@@ -13,7 +13,7 @@ import AddProduct from "./pages/admin/ProductManage/AddProduct";
 import EditProduct from "./pages/admin/ProductManage/EditProduct";
 import ListProduct from "./pages/admin/ProductManage/ListProduct";
 import Home from "./pages/client/Home";
-// import Shop from "./pages/client/Shop";
+import Shop from "./pages/client/Shop";
 // import Blog from "./pages/client/Blog";
 // import Cart from "./pages/client/Cart";
 // import CheckOut from "./pages/client/CheckOut";
@@ -26,8 +26,8 @@ const App = () => {
     <Routes>
       <Route path="/" element={<WebsiteLayout />}>
           <Route index element={<Home />}/>
-          {/* <Route path="shop" element={<Shop/>}  />
-          <Route path="products/detail" element={<ShopDetail/>}  />
+          <Route path="shop" element={<Shop/>}  />
+          {/* <Route path="products/detail" element={<ShopDetail/>}  />
           <Route path="cart" element={<Cart/>}  />
           <Route path="checkout" element={<CheckOut/>}  />
           <Route path="blog" element={<Blog/>}  />
