@@ -18,9 +18,9 @@ import Blog from "./pages/client/Blog";
 import Cart from "./pages/client/Cart";
 import CheckOut from "./pages/client/CheckOut";
 import Contact from "./pages/client/Contact";
-// import ShopDetail from "./pages/client/ShopDetail";
-// import Signin from "./pages/Signin";
-// import Signup from "./pages/Signup";
+import ShopDetail from "./pages/client/ShopDetail";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 const App = () => {
   return (
     <Routes>
@@ -31,9 +31,9 @@ const App = () => {
           <Route path="blog" element={<Blog/>}  />
           <Route path="checkout" element={<CheckOut/>}  />
           <Route path="contact" element={<Contact/>}  />
-          {/* <Route path="products/detail" element={<ShopDetail/>}  />
+          <Route path="shop/detail" element={<ShopDetail/>}  />
           <Route path="login" element={<Signin/>}  />
-          <Route path="signup" element={<Signup/>}  /> */}
+          <Route path="signup" element={<Signup/>}  />
       </Route>
       <Route path="admin" element={<AdminLayout />}>
         <Route index element={<Doashboard />} />
