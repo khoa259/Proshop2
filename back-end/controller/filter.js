@@ -1,6 +1,6 @@
-import Product from "../model/product";
+import Product from "../model/product.js";
 
-exports.getNewArrivals = async (req, res) => {
+export const getNewArrivals = async (req, res) => {
   const sortBy = req.query.sortBy ? req.query.sortBy : "desc";
   const limit = req.query.limit ? parseInt(req.query.limit) : parseInt(3);
 
@@ -20,7 +20,7 @@ exports.getNewArrivals = async (req, res) => {
   }
 };
 
-exports.searchByQueryType = async (req, res) => {
+export const searchByQueryType = async (req, res) => {
   const { type, query } = req.body;
 
   try {

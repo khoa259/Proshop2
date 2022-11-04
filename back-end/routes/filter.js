@@ -1,8 +1,7 @@
 import express from "express";
-import filterController from "../controllers/filter";
+import { getNewArrivals, searchByQueryType } from "../controller/filter.js";
+const filterRoutes = express.Router();
+filterRoutes.get("/", getNewArrivals);
+filterRoutes.post("/search", searchByQueryType);
 
-const router = express.Router();
-router.get("/", filterController.getNewArrivals);
-router.post("/search", filterController.searchByQueryType);
-
-export default router;
+export default filterRoutes;

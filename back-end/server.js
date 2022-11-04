@@ -7,7 +7,7 @@ import productRoutes from "./routes/product.js";
 import categoryRouter from "./routes/category.js";
 import authRoutes from "./routes/auth.js";
 import fileUpload from "express-fileupload";
-import filterRoutes from "./routes/filter";
+import filterRoutes from "./routes/filter.js";
 
 const app = express();
 app.use(
