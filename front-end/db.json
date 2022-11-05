@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "productName": "json-server",
+      "productPrice": 10000,
+      "productQty": 3,
+      "productDesc": "des",
+      "file": "https://picsum.photos/200/300",
+      "productPriceSale":1000
+    },
+    {
+      "id": 6,
+      "productName": "json-server",
+      "productPrice": 10000,
+      "productQty": 3,
+      "productDesc": "des",
+      "file": "https://picsum.photos/200/300",
+      "productPriceSale":1000
+    },
+    {
+      "id": 5,
+      "productName": "json-server",
+      "productPrice": 10000,
+      "productQty": 3,
+      "productDesc": "des",
+      "file": "https://picsum.photos/200/300",
+      "productPriceSale":1000
+    },
+    {
+      "id": 4,
+      "productName": "json-server",
+      "productPrice": 10000,
+      "productQty": 3,
+      "productDesc": "des",
+      "file": "https://picsum.photos/200/300",
+      "productPriceSale":1000
+    },
+    {
+      "id": 3,
+      "productName": "json-server",
+      "productPrice": 10000,
+      "productQty": 3,
+      "productDesc": "des",
+      "file": "https://picsum.photos/200/300",
+      "productPriceSale":1000
+    },
+    {
+      "id": 2,
+      "productName": "json-server",
+      "productPrice": 10000,
+      "productQty": 3,
+      "productDesc": "des",
+      "file": "https://picsum.photos/200/300",
+      "productPriceSale":1000
+    }
+  ]
+}
