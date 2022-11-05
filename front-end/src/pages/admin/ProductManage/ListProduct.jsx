@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { list } from '../../../api/product'
+import { list, remove } from '../../../api/product'
 
 const ListProduct = () => {
     const [products, setProducts] = useState([]);
@@ -11,6 +11,11 @@ const ListProduct = () => {
         }
         getProduct()
     }, []);
+    
+    const onRemove = (id) => {
+        remove(id);
+        setProducts(products.filter((i) => i.id !== id));
+    }
     return (
         <div>
             <main className="app-content">
@@ -74,7 +79,7 @@ const ListProduct = () => {
                                                     <td>{item.productQty}</td>
                                                     <td>{item.productPriceSale}</td>
                                                     <td>Bàn ăn</td>
-                                                    <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa"><i className="fas fa-trash-alt" />
+                                                    <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item.id)}><i className="fas fa-trash-alt" />
                                                     </button>
                                                         <button className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></button>
                                                     </td>
