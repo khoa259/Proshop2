@@ -6,6 +6,7 @@ import axios from 'axios'
 const Shop = () => {
     const [data, setData] = useState<any>([]);
     const [searchValue, setSearchValue] = useState<any>([])
+    console.log(data)
     useEffect(() => {
         const  getProducts = async () => {
             const {data} = await axios.get(`http://localhost:5000/api/products?search=${searchValue}&limit=${10}&page=${1}`)
