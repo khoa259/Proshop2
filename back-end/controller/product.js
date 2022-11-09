@@ -54,7 +54,9 @@ export const create = async (req, res) => {
         product.productPrice = productPrice;
         product.productQty = productQty;
         product.file = url;
-        await product.save().then((res) => console.log(res)).catch((err) => console.log(err));
+        if (product) {
+             product.save().then((res) => console.log(res)).catch((err) => console.log(err));
+        }
     } catch (err) {
         console.log(err, 'productController.create error');
         res.status(500).json({
@@ -72,7 +74,8 @@ export const list = async (req, res) => {
     const sort =  req.query.sort || '-createdAt' ;
     if (search || limit || page || skip) {
         const products = await Product.find({productName: {$regex: search, $options: '$i'}}).sort(sort).limit(limit).skip(skip).exec();
-        res.json(products)
+        const count = await products.length;
+        res.json({products,count});
         return
     }
     else{
