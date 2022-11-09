@@ -5,13 +5,15 @@ import axios from 'axios'
 
 const Shop = () => {
     const [data, setData] = useState<any>([]);
+    const [searchValue, setSearchValue] = useState<any>([])
+    console.log(data)
     useEffect(() => {
         const  getProducts = async () => {
-            const {data} = await axios.get('http://localhost:5000/api/products')
+            const {data} = await axios.get(`http://localhost:5000/api/products?search=${searchValue}&limit=${10}&page=${1}`)
             setData(data)
         };
         getProducts()
-    },[])
+    },[searchValue])
   return (
     <>
     <Breadcrumb/>
@@ -23,8 +25,10 @@ const Shop = () => {
                     <div className="shop__sidebar">
                         <div className="shop__sidebar__search">
                             <form action="#">
-                                <input type="text" placeholder="Search..." />
-                                <button type="submit"><span className="icon_search" /></button>
+                                <input
+                                value={searchValue}
+                                onChange={(e:any) => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
+                                <button onClick={() => setSearchValue('')}><span className="icon_search" /></button>
                             </form>
                         </div>
                         <div className="shop__sidebar__accordion">
