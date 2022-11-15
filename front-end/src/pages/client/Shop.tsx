@@ -10,9 +10,8 @@ const Shop = () => {
     const [data, setData] = useState<any>([]);
     const [searchValue, setSearchValue] = useState<any>([])
     const [page , setPage] = useState(1);
-    const [limit, setLimit] = useState(3);
+    const [limit, setLimit] = useState(6);
     const [sort, setSort] = useState("");
-    console.log(sort)
     const { search } = useLocation()
     console.log(data)
     const debou = Debounce(searchValue, 1000)
