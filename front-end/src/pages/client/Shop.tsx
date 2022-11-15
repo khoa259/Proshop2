@@ -1,20 +1,38 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useEffect,useState } from 'react'
 import Breadcrumb from '../../component/common/Breadcrumb'
 import axios from 'axios'
+import { Debounce } from '../../hooks/UseDebounce'
+import { Pagination } from '../../component/Panagation'
+import { useLocation } from 'react-router-dom'
 
 const Shop = () => {
     const [data, setData] = useState<any>([]);
     const [searchValue, setSearchValue] = useState<any>([])
-    console.log(data)
+    const [page , setPage] = useState(1);
+    const [limit, setLimit] = useState(2);
+    const { search } = useLocation()
+
+    const debou = Debounce(searchValue, 1000)
+
     useEffect(() => {
-        const  getProducts = async () => {
-            const {data} = await axios.get(`http://localhost:5000/api/products?search=${searchValue}&limit=${10}&page=${1}`)
+        const page = new URLSearchParams(search).get('page') || '1';
+        setPage(Number(page))
+    }, [search])
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const {data} = await axios.get(`http://localhost:5000/api/products?search=${debou}&limit=${limit}&page=${page}`)
             setData(data)
         };
         getProducts()
-    },[searchValue])
-  return (
+    },[debou,page])
+
+    const totalPages = useMemo(() => {
+        if(!data?.count) return 0;
+        return Math.ceil(data.count / limit)
+    }, [data?.count])
+    return (
     <>
     <Breadcrumb/>
      {/* Shop Section Begin */}
@@ -284,11 +302,12 @@ const Shop = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="product__pagination">
-                                <a className="active" href="#">1</a>
+                            <Pagination totalPages={totalPages} page={page} />
+                                {/* <a className="active" href="#">1</a>
                                 <a href="#">2</a>
                                 <a href="#">3</a>
                                 <span>...</span>
-                                <a href="#">21</a>
+                                <a href="#">21</a> */}
                             </div>
                         </div>
                     </div>

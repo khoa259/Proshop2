@@ -74,18 +74,20 @@ export const list = async (req, res) => {
     const sort =  req.query.sort || '-createdAt' ;
     if (search || limit || page || skip) {
         const products = await Product.find({productName: {$regex: search, $options: '$i'}}).sort(sort).limit(limit).skip(skip).exec();
-        const count = await products.length;
+        const count = await Product.length;
         res.json({products,count});
         return
     }
     else{
         const products = await Product.find().exec();
-        const result = await Promise.allSettled([
-			Product.countDocuments()
-		])
-		const count = await result[0] ? result[0].value : 0;
-		console.log(count);
-		res.json({products,count});
+        const count = await products.length;
+        res.json({products,count});
+        // const result = await Promise.allSettled([
+		// 	Product.countDocuments()
+		// ])
+		// const count = await result[0] ? result[0].value : 0;
+		// console.log(count);
+		// res.json({products,count});
     }
   } catch (error) {
     return res.status(500).json({msg: error.message})
