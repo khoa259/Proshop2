@@ -28,7 +28,6 @@ export const Pagination = ({totalPages, page}) => {
 
             {newArr.map(num => (
                 <>
-                {console.log(num)}
                     <a key={num} className={`${isActive(num)}`}
                     onClick={() => jump(num)}>{num}</a>
                 </>

@@ -10,9 +10,11 @@ const Shop = () => {
     const [data, setData] = useState<any>([]);
     const [searchValue, setSearchValue] = useState<any>([])
     const [page , setPage] = useState(1);
-    const [limit, setLimit] = useState(2);
+    const [limit, setLimit] = useState(3);
+    const [sort, setSort] = useState("");
+    console.log(sort)
     const { search } = useLocation()
-
+    console.log(data)
     const debou = Debounce(searchValue, 1000)
 
     useEffect(() => {
@@ -22,16 +24,20 @@ const Shop = () => {
 
     useEffect(() => {
         const getProducts = async () => {
-            const {data} = await axios.get(`http://localhost:5000/api/products?search=${debou}&limit=${limit}&page=${page}`)
+            const {data} = await axios.get(`http://localhost:5000/api/products?search=${debou}&limit=${limit}&page=${page}&sort=${sort}`)
             setData(data)
         };
         getProducts()
-    },[debou,page])
+    },[debou,page,sort])
 
     const totalPages = useMemo(() => {
         if(!data?.count) return 0;
         return Math.ceil(data.count / limit)
     }, [data?.count])
+
+    const handlerSort = (e) => {
+        setSort(e.target.value)
+    }
     return (
     <>
     <Breadcrumb/>
@@ -215,10 +221,14 @@ const Shop = () => {
                             <div className="col-lg-6 col-md-6 col-sm-6">
                                 <div className="shop__product__option__right">
                                     <p>Sort by Price:</p>
-                                    <select>
-                                        <option>Low To High</option>
-                                        <option>$0 - $55</option>
-                                        <option>$55 - $100</option>
+                                    <select onChange={handlerSort}>
+                                        <option value="">All</option>
+                                        <option value="createdAt">The Old</option>
+                                        <option value="-createdAt">The New</option>
+                                        <option value="productName">Name A-Z</option>
+                                        <option value="-productName">Name Z-A</option>
+                                        <option value="-productPrice">Price Big - Price Small</option>
+                                        <option value="productPrice">Price Small - Price Big</option>
                                     </select>
                                 </div>
                             </div>
@@ -262,7 +272,7 @@ const Shop = () => {
                             </div>
                         </div>
                         ))}
-                         <div className="col-lg-4 col-md-6 col-sm-6">
+                         {/* <div className="col-lg-4 col-md-6 col-sm-6">
                             <div className="product__item">
                                 <div className="product__item__pic set-bg" data-setbg="img/product/product-11.jpg">
                                     <ul className="product__hover">
@@ -296,7 +306,7 @@ const Shop = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         
                     </div>
                     <div className="row">

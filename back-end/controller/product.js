@@ -72,9 +72,10 @@ export const list = async (req, res) => {
     const page = parseInt(req.query.page);
     const skip =   limit * (page - 1) ;
     const sort =  req.query.sort || '-createdAt' ;
-    if (search || limit || page || skip) {
+    if (search || limit || page || skip || sort) {
         const products = await Product.find({productName: {$regex: search, $options: '$i'}}).sort(sort).limit(limit).skip(skip).exec();
-        const count = await Product.length;
+        const total =  await Product.find().exec();
+        const count = total.length;
         res.json({products,count});
         return
     }
