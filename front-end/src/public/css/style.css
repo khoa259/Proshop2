@@ -106,7 +106,36 @@ ol {
 	margin: 0;
 }
 
-/*---------------------
+  .round {
+	width: 32px;
+    height: 32px;
+	background-color: #fff;
+	border-radius: 48px;
+	border: 2px solid #f2af29;
+	transition: all 0.3s ease;
+	margin: 0 10px;
+  }
+  
+  .pre::after {
+	content: "\21e6";
+	font-size: 18px;
+	color: #f2af29;
+	transition: all 0.3s ease;
+  }
+  .next::after {
+	content: "\21e8";
+	font-size: 18px;
+	color: #f2af29;
+	transition: all 0.3s ease;
+  }
+  
+  .round :hover {
+	border-color: #14519f;
+  }
+  
+  .round :hover::after {
+	color: #14519f;
+  }------------------
   Helper CSS
 -----------------------*/
 

@@ -1,20 +1,43 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useEffect,useState } from 'react'
 import Breadcrumb from '../../component/common/Breadcrumb'
 import axios from 'axios'
+import { Debounce } from '../../hooks/UseDebounce'
+import { Pagination } from '../../component/Panagation'
+import { useLocation } from 'react-router-dom'
 
 const Shop = () => {
     const [data, setData] = useState<any>([]);
     const [searchValue, setSearchValue] = useState<any>([])
+    const [page , setPage] = useState(1);
+    const [limit, setLimit] = useState(6);
+    const [sort, setSort] = useState("");
+    const { search } = useLocation()
     console.log(data)
+    const debou = Debounce(searchValue, 1000)
+
     useEffect(() => {
-        const  getProducts = async () => {
-            const {data} = await axios.get(`http://localhost:5000/api/products?search=${searchValue}&limit=${10}&page=${1}`)
+        const page = new URLSearchParams(search).get('page') || '1';
+        setPage(Number(page))
+    }, [search])
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const {data} = await axios.get(`http://localhost:5000/api/products?search=${debou}&limit=${limit}&page=${page}&sort=${sort}`)
             setData(data)
         };
         getProducts()
-    },[searchValue])
-  return (
+    },[debou,page,sort])
+
+    const totalPages = useMemo(() => {
+        if(!data?.count) return 0;
+        return Math.ceil(data.count / limit)
+    }, [data?.count])
+
+    const handlerSort = (e) => {
+        setSort(e.target.value)
+    }
+    return (
     <>
     <Breadcrumb/>
      {/* Shop Section Begin */}
@@ -197,10 +220,14 @@ const Shop = () => {
                             <div className="col-lg-6 col-md-6 col-sm-6">
                                 <div className="shop__product__option__right">
                                     <p>Sort by Price:</p>
-                                    <select>
-                                        <option>Low To High</option>
-                                        <option>$0 - $55</option>
-                                        <option>$55 - $100</option>
+                                    <select onChange={handlerSort}>
+                                        <option value="">All</option>
+                                        <option value="createdAt">The Old</option>
+                                        <option value="-createdAt">The New</option>
+                                        <option value="productName">Name A-Z</option>
+                                        <option value="-productName">Name Z-A</option>
+                                        <option value="-productPrice">Price Big - Price Small</option>
+                                        <option value="productPrice">Price Small - Price Big</option>
                                     </select>
                                 </div>
                             </div>
@@ -244,7 +271,7 @@ const Shop = () => {
                             </div>
                         </div>
                         ))}
-                         <div className="col-lg-4 col-md-6 col-sm-6">
+                         {/* <div className="col-lg-4 col-md-6 col-sm-6">
                             <div className="product__item">
                                 <div className="product__item__pic set-bg" data-setbg="img/product/product-11.jpg">
                                     <ul className="product__hover">
@@ -278,17 +305,18 @@ const Shop = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         
                     </div>
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="product__pagination">
-                                <a className="active" href="#">1</a>
+                            <Pagination totalPages={totalPages} page={page} />
+                                {/* <a className="active" href="#">1</a>
                                 <a href="#">2</a>
                                 <a href="#">3</a>
                                 <span>...</span>
-                                <a href="#">21</a>
+                                <a href="#">21</a> */}
                             </div>
                         </div>
                     </div>
