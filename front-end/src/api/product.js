@@ -4,8 +4,8 @@ export const list = () => {
   const url = `/products`;
   return instance.get(url);
 };
-export const remove = (id) => {
-  const url = `/products/${id}`;
+export const remove = (_id) => {
+  const url = `/products/${_id}`;
   return instance.delete(url);
 };
 export const add = (product) => {

@@ -7,14 +7,14 @@ const ListProduct = () => {
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await list();
-            setProducts(data);
+            setProducts(data.products);
         }
         getProduct()
     }, []);
-    
-    const onRemove = (id) => {
-        remove(id);
-        setProducts(products.filter((i) => i.id !== id));
+
+    const onRemove = (_id) => {
+        remove(_id);
+        setProducts(products.filter((i) => i._id !== _id));
     }
     return (
         <div>
@@ -69,23 +69,23 @@ const ListProduct = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {products.length > 0 ? products.map((item, index) => {
+                                        {products?.map((item, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td width={10}><input type="checkbox" name="check1" /></td>
-                                                    <td>{item.id}</td>
+                                                    <td>{index + 1}</td>
                                                     <td>{item.productName}</td>
                                                     <td><img src={item.file} alt width="50px;" /></td>
                                                     <td>{item.productQty}</td>
                                                     <td>{item.productPriceSale}</td>
                                                     <td>Bàn ăn</td>
-                                                    <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item.id)}><i className="fas fa-trash-alt" />
+                                                    <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item._id)}><i className="fas fa-trash-alt" />
                                                     </button>
                                                         <button className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></button>
                                                     </td>
                                                 </tr>
                                             )
-                                        }) : "Khong Co Gi"}
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
