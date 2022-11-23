@@ -141,13 +141,13 @@ export const remove = async (req, res) => {
         const productId = req.params.productId;
         const deletedProduct = await Product.findByIdAndDelete(productId);
 
-        fs.unlink(`uploads/${deletedProduct.fileName}`, err => {
-            if (err) throw err;
-            console.log(
-                'Image successfully deleted from filesystem: ',
-                deletedProduct.fileName
-            );
-        });
+        // fs.unlink(`uploads/${deletedProduct.fileName}`, err => {
+        //     if (err) throw err;
+        //     console.log(
+        //         'Image successfully deleted from filesystem: ',
+        //         deletedProduct.fileName
+        //     );
+        // });
 
         res.json(deletedProduct);
     } catch (err) {
