@@ -56,21 +56,6 @@ const AddProduct = () => {
                 <label className="control-label">Số lượng</label>
                 <input {...register('productQty', {required: true})} className="form-control" type="number" />
               </div>
-              {/* <div className="form-group col-md-3">
-                <label htmlFor="exampleSelect1" className="control-label">Danh mục</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>-- Chọn danh mục --</option>
-                  <option>Bàn ăn</option>
-                  <option>Bàn thông minh</option>
-                  <option>Tủ</option>
-                  <option>Ghế gỗ</option>
-                  <option>Ghế sắt</option>
-                  <option>Giường người lớn</option>
-                  <option>Giường trẻ em</option>
-                  <option>Bàn trang điểm</option>
-                  <option>Giá đỡ</option>
-                </select>
-              </div> */}
               <div className="form-group col-md-3">
                 <label className="control-label">Giá bán</label>
                 <input {...register('productPrice', {required: true})} className="form-control" type="number" />
