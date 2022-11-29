@@ -1,6 +1,28 @@
 import React from 'react'
+import {useForm} from "react-hook-form"
+import { add } from '../../../api/product'
+import "./index.css"
 
 const AddProduct = () => {
+  const {register, handleSubmit, formState: {error}} = useForm();
+  const [preview, setPreview] = React.useState(null)
+  console.log(preview)
+  const handlePicture = (e) => {
+    const objectUrl = URL.createObjectURL(e.target.files[0])
+    setPreview(objectUrl)
+  }
+
+  const onSubmit = async (data) => {
+    const formdata = new FormData()
+    formdata.append('productName', data.productName)
+    formdata.append('productQty', data.productQty)
+    formdata.append('productPrice', data.productPrice)
+    // Array.from(data.file).map(item => {
+      formdata.append('file', data.file[0])
+      console.log(data.file[0])
+    // })
+    add(formdata)
+  }
   return (
     <div>
         <div>
@@ -25,24 +47,16 @@ const AddProduct = () => {
               <div className="col-sm-2">
               </div>
             </div>
-            <form className="row">
+            <form onSubmit={handleSubmit(onSubmit)} className="row">
               <div className="form-group col-md-3">
                 <label className="control-label">Tên sản phẩm</label>
-                <input className="form-control" type="text" />
+                <input {...register('productName', {required: true})} className="form-control" type="text" />
               </div>
               <div className="form-group  col-md-3">
                 <label className="control-label">Số lượng</label>
-                <input className="form-control" type="number" />
+                <input {...register('productQty', {required: true})} className="form-control" type="number" />
               </div>
-              <div className="form-group col-md-3 ">
-                <label htmlFor="exampleSelect1" className="control-label">Tình trạng</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>-- Chọn tình trạng --</option>
-                  <option>Còn hàng</option>
-                  <option>Hết hàng</option>
-                </select>
-              </div>
-              <div className="form-group col-md-3">
+              {/* <div className="form-group col-md-3">
                 <label htmlFor="exampleSelect1" className="control-label">Danh mục</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>-- Chọn danh mục --</option>
@@ -56,36 +70,47 @@ const AddProduct = () => {
                   <option>Bàn trang điểm</option>
                   <option>Giá đỡ</option>
                 </select>
-              </div>
+              </div> */}
               <div className="form-group col-md-3">
                 <label className="control-label">Giá bán</label>
-                <input className="form-control" type="text" />
+                <input {...register('productPrice', {required: true})} className="form-control" type="number" />
               </div>
               <div className="form-group col-md-3">
-                <label className="control-label">Giá vốn</label>
-                <input className="form-control" type="text" />
-              </div>
-              <div className="form-group col-md-12">
                 <label className="control-label">Ảnh sản phẩm</label>
                 <div id="myfileupload">
-                  <input type="file" id="uploadfile" name="ImageUpload" onchange="readURL(this);" />
+                  <input type="file" style={{color: 'white'}}{...register('file')} multiple onChange={handlePicture}/>
                 </div>
-                <div id="thumbbox">
-                  <img height={450} width={400} alt="Thumb image" id="thumbimage" style={{display: 'none'}} />
-                  <a className="removeimg" href="javascript:" />
+                {preview ? (
+                  <div style={{display: 'flex'}}>
+                  <img src={preview} style={{width: 200, height: 220, marginTop:10}} /> <button onClick={() => setPreview(null)} className="btn btn-primary btn-sm trash preview">xóa</button>
                 </div>
-                <div id="boxchoice">
+                ): (
+                  <div id="boxchoice">
                   <a href="javascript:" className="Choicefile"><i className="fas fa-cloud-upload-alt" /> Chọn ảnh</a>
                   <p style={{clear: 'both'}} />
                 </div>
+                )}
+                
+               
               </div>
               <div className="form-group col-md-12">
                 <label className="control-label">Mô tả sản phẩm</label>
-                <textarea className="form-control" name="mota" id="mota" defaultValue={""} />
+                <textarea  {...register('productDesc', {required: true})}  className="form-control" />
+              </div>
+              {/* <div className="form-group col-md-12">
+              <label className="control-label">Mô tả sản phẩm</label>
+                <input  {...register('productDesc', {required: true})} className="form-control" type="text" />
+              </div> */}
+              <div style={{padding: 17}}>
+              <button className="btn btn-primary" style={{background: '#31b633', border: '1px solid #31b633'}}>Lưu lại</button>
+              <a className="btn btn-cancel" style={{
+                    background: '#f2ca39',
+                    color: 'white',
+                    border: '1px solid #f2ca39',
+                    marginLeft: 16
+              }} href="table-data-product.html">Hủy bỏ</a>
               </div>
             </form></div>
-          <button className="btn btn-save" type="button">Lưu lại</button>
-          <a className="btn btn-cancel" href="table-data-product.html">Hủy bỏ</a>
         </div>
       </div></div></main>
   {/*

@@ -9,8 +9,11 @@ export const remove = (id) => {
   return instance.delete(url);
 };
 export const add = (product) => {
+  console.log(product)
   const url = `/products`;
-  return instance.post(url, product);
+  return instance.post(url, product,{
+    headers: { 'Content-Type': 'multipart/form-data' }
+  } );
 };
 export const read = (id) => {
   const url = `/products/${id}`;

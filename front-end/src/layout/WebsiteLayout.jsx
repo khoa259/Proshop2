@@ -2,9 +2,14 @@ import React from 'react'
 import { Outlet, Link, useLocation  } from 'react-router-dom'
 import Cart from '../public/img/icon/cart.png'
 import Search from '../public/img/icon/search.png'
-import Heart from '/'
+import Heart from '../public/img/icon/heart.png'
+import Logo from '../public/img/icon/logo.png'
+import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux'
+
 
 const WebsiteLayout = () => {
+    const cart = useSelector(state => state.cart)
   return (
     <>
            <div className="offcanvas-menu-overlay" />
@@ -25,7 +30,7 @@ const WebsiteLayout = () => {
                 </div>
                 <div className="offcanvas__nav__option">
                     <a href="#" className="search-switch"><img src={Search}  /></a>
-                    <a href="#"><img src="/src"  /></a>
+                    <a href="#"><img src="../public/img/icon/compare.png"  /></a>
                     <img src={Cart}  /> <Link to='/cart'>cart</Link><span>0</span>
                     <div className="price">$0.00</div>
                 </div>
@@ -37,7 +42,7 @@ const WebsiteLayout = () => {
             {/* Offcanvas Menu End */}
             {/* Header Section Begin */}
             <header className="header">
-                <div className="header__top">
+                {/* <div className="header__top">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-6 col-md-7">
@@ -63,12 +68,12 @@ const WebsiteLayout = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-3">
                             <div className="header__logo">
-                                <a href="./index.html"><img src="img/logo.png"  /></a>
+                                <a href="./index.html"><img src={Logo}  /></a>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6">
@@ -92,10 +97,10 @@ const WebsiteLayout = () => {
                         </div>
                         <div className="col-lg-3 col-md-3">
                             <div className="header__nav__option">
-                                <a href="#" className="search-switch"><img src="img/icon/search.png"  /></a>
-                                <a href="#"><img src="img/icon/heart.png"  /></a>
-                                <a href="#"><img src="img/icon/cart.png"  /> <span>0</span></a>
-                                <div className="price">$0.00</div>
+                                <a href="#" className="search-switch"><img src={Search}  /></a>
+                                <a href="#"><img src={Heart}  /></a>
+                                <NavLink to="/cart"><img src={Cart} /> <span style={{paddingBottom: 10}}>{cart?.amount}</span></NavLink>
+                                <div className="price">${cart?.total}</div>
                             </div>
                         </div>
                     </div>

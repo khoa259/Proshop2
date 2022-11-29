@@ -7,10 +7,14 @@ import { Pagination } from '../../component/Panagation'
 import { Link, useLocation } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { addTocart } from '../../redux/cartSlice'
+import Search from '../../public/img/icon/search.png'
+import Heart from '../../public/img/icon/heart.png'
+import Compare from '../../public/img/icon/compare.png'
 
 
 const Shop = () => {
     const [data, setData] = useState([]);
+    console.log(Compare)
 
     const [searchValue, setSearchValue] = useState([])
     const [page , setPage] = useState(1);
@@ -57,17 +61,6 @@ const Shop = () => {
     return (
     <>
     <Breadcrumb/>
-     {/* Shop Section Begin */}
-     <h1>{cart?.total}</h1>
-     <h1>{cart?.amount}</h1>
-     {cart?.cart?.map(item => (
-        <tr>
-            <td>{item.productName}</td>
-            <td>{item.productPrice}</td>
-            <td>quantity{item.quantity}</td>
-        </tr>
-     ))}
-      <img src="img/icon/cart.png" /> <Link to='/cart'>cart</Link><span>0</span>
     <section className="shop spad">
         <div className="container">
             <div className="row">
@@ -266,22 +259,23 @@ const Shop = () => {
                             <div className="product__item">
                                 <div className="product__item__pic set-bg" style={{backgroundImage: `url(${item.file})`}}>
                                     <ul className="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" /></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" /> <span>Compare</span></a>
+                                        <li><a href="#"><img src={Heart} /></a></li>
+                                        <li><a href="#"><img src={Heart}/></a>
                                         </li>
-                                        <li><a href="#"><img src="img/icon/search.png" /></a></li>
+                                        <li><a href="#"><img src={Search} /></a></li>
                                     </ul>
                                 </div>
                                 
                                  <div className="product__item__text">
                                     <h6>{item.productName}</h6>
-                                    <a onClick={() => handleCart(item)} className="add-cart">+ Add To Cart</a>
+                                    <a onClick={() => handleCart(item)} style={{color: 'rgb(254 89 89)'}} className="add-cart">+ Add To Cart</a>
                                     <div className="rating">
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
+                                        
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
                                     </div>
                                     <h5>${item.productPrice}</h5>
                                     <div className="product__color__select">

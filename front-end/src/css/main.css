@@ -15321,7 +15321,9 @@ be a descendant of the grid when it is being dragged.
   margin-bottom: 30px;
   color: #2a2a2a;
 }
-
+.data-setbg{
+  background-image: url(http://res.cloudinary.com/depsrm5pd/image/upload/v1669383041/test/hayk9udjmudon3vl9po2.jpg) !important;
+}
 .user .user-settings label {
   color: #666;
 }

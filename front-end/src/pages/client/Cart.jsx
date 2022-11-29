@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { decrease, increase } from '../../redux/cartSlice';
+import { NavLink} from 'react-router-dom';
 
 const Cart = () => {
     const dispath = useDispatch()
@@ -52,7 +53,7 @@ const Cart = () => {
                                         {cart?.cart?.map((item) => (
                                             <tr>
                                                 <td className="product__cart__item">
-                                                    <div className="product__cart__item__pic">
+                                                    <div style={{width: 20, height: 20}} className="product__cart__item__pic">
                                                         <img src={item.file} />
                                                     </div>
                                                 </td>
@@ -154,7 +155,7 @@ const Cart = () => {
                                     <li>Subtotal <span>$ {cart?.total}</span></li>
                                     <li>Total <span>$ {cart?.total}</span></li>
                                 </ul>
-                                <a href="#" className="primary-btn">Proceed to checkout</a>
+                                <NavLink to="/checkout" className="primary-btn">Proceed to checkout</NavLink>
                             </div>
                         </div>
                     </div>
