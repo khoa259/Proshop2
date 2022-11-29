@@ -19,7 +19,6 @@ const AddProduct = () => {
     formdata.append('productPrice', data.productPrice)
     // Array.from(data.file).map(item => {
       formdata.append('file', data.file[0])
-      console.log(data.file[0])
     // })
     add(formdata)
   }
