@@ -8,14 +8,15 @@ const ListProduct = () => {
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await list();
-            setProducts(data);
+            setProducts(data.products);
         }
         getProduct()
     }, []);
     
     const onRemove = (id) => {
+        console.log(id)
         remove(id);
-        setProducts(products.filter((i) => i.id !== id));
+        setProducts(products.filter((i) => i._id !== id));
     }
     return (
         <div>
@@ -68,7 +69,7 @@ const ListProduct = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {products?.products?.map((item, index) => {
+                                        {products?.map((item, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td width={10}><input type="checkbox" name="check1" /></td>
@@ -77,7 +78,7 @@ const ListProduct = () => {
                                                     <td>{item.productQty}</td>
                                                     <td>{item.productPrice}</td>
                                                     <td style={{textAlign: 'center'}}>
-                                                        <button style={{color: 'red', marginRight: 10}}  className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item.id)}><i className="fas fa-trash-alt" />
+                                                        <button style={{color: 'red', marginRight: 10}}  className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item._id)}><i className="fas fa-trash-alt" />
                                                         </button>
                                                         <button style={{color: '#e8c52f'}} className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></button>
                                                         </td>
