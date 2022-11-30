@@ -16,11 +16,12 @@ export const add = (product) => {
   } );
 };
 export const read = (id) => {
+  console.log(id)
   const url = `/products/${id}`;
   return instance.get(url);
 };
-export const update = (product) => {
-  const url = `products/${product._id}`;
+export const update = (prams, product) => {
+  const url = `products/${prams}`;
   return instance.put(url, product);
 };
 export const search = () => {

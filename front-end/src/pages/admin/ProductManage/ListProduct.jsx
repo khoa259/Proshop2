@@ -80,7 +80,7 @@ const ListProduct = () => {
                                                     <td style={{textAlign: 'center'}}>
                                                         <button style={{color: 'red', marginRight: 10}}  className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item._id)}><i className="fas fa-trash-alt" />
                                                         </button>
-                                                        <button style={{color: '#e8c52f'}} className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></button>
+                                                        <Link to={`/admin/product/${item._id}/edit`}style={{color: '#e8c52f'}} className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></Link>
                                                         </td>
                                                 </tr>
                                             )

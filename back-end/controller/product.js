@@ -25,19 +25,19 @@ export const create = async (req, res) => {
         productFile
     } = req.body;
     try {
-        if(!req.files || Object.keys(req.files).length === 0)
-            return res.status(400).json({msg: 'No files were uploaded.'})
+        // if(!req.files || Object.keys(req.files).length === 0)
+        //     return res.status(400).json({msg: 'No files were uploaded.'})
         
         const file = req.files.file;
-        if(file.size > 1024*1024) {
-            removeTmp(file.tempFilePath)
-            return res.status(400).json({msg: "Size too large"})
-        }
+        // if(file.size > 1024*1024) {
+        //     removeTmp(file.tempFilePath)
+        //     return res.status(400).json({msg: "Size too large"})
+        // }
 
-        if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png'){
-            removeTmp(file.tempFilePath)
-            return res.status(400).json({msg: "File format is incorrect."})
-        }
+        // if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png'){
+        //     removeTmp(file.tempFilePath)
+        //     return res.status(400).json({msg: "File format is incorrect."})
+        // }
     
         const {url} = await cloudinary.v2.uploader.upload(file.tempFilePath,{folder:"test"}, async(err, result)=>{
             if(err) throw err;
@@ -116,24 +116,35 @@ export const read = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-    const productId = req.params.productId;
+    const condition = { _id: req.params.productId }
+	const update = req.body;
+    console.log(req.body.file)
+    try {
+		const product = await Product.findOneAndUpdate(condition, update).exec();
+		res.json(product);
+	} catch (error) {
+		res.status(400).json({
+			error: "Xóa sản phẩm không thành công"
+		})
+	}
+    // const productId = req.params.productId;
 
-    if (req.file !== undefined) {
-        req.body.fileName = req.file.filename;
-    }
+    // if (req.file !== undefined) {
+    //     req.body.fileName = req.file.filename;
+    // }
 
-    const oldProduct = await Product.findByIdAndUpdate(productId, req.body);
+    // const oldProduct = await Product.findByIdAndUpdate(productId, req.body);
 
-    if (req.file !== undefined && req.file.filename !== oldProduct.fileName) {
-        fs.unlink(`uploads/${oldProduct.fileName}`, err => {
-            if (err) throw err;
-            console.log('Image deleted from the filesystem');
-        });
-    }
+    // if (req.file !== undefined && req.file.filename !== oldProduct.fileName) {
+    //     fs.unlink(`uploads/${oldProduct.fileName}`, err => {
+    //         if (err) throw err;
+    //         console.log('Image deleted from the filesystem');
+    //     });
+    // }
 
-    res.json({
-        successMessage: 'Product successfully updated',
-    });
+    // res.json({
+    //     successMessage: 'Product successfully updated',
+    // });
 };
 
 export const remove = async (req, res) => {
