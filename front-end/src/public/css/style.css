@@ -542,13 +542,16 @@ ol {
 	margin-right: 26px;
 	position: relative;
 }
-
+.add-cart {
+	cursor: pointer;
+	color: #dd5e5e;
+}
 .header__nav__option a span {
 	color: #0d0d0d;
 	font-size: 11px;
 	position: absolute;
 	left: 5px;
-	top: 8px;
+	top: 4px;
 }
 
 .header__nav__option a:last-child {

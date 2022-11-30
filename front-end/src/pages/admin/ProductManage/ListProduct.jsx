@@ -4,6 +4,7 @@ import { list, remove } from '../../../api/product'
 
 const ListProduct = () => {
     const [products, setProducts] = useState([]);
+    console.log(products)
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await list();
@@ -11,10 +12,11 @@ const ListProduct = () => {
         }
         getProduct()
     }, []);
-
-    const onRemove = (_id) => {
-        remove(_id);
-        setProducts(products.filter((i) => i._id !== _id));
+    
+    const onRemove = (id) => {
+        console.log(id)
+        remove(id);
+        setProducts(products.filter((i) => i._id !== id));
     }
     return (
         <div>
@@ -31,7 +33,7 @@ const ListProduct = () => {
                             <div className="tile-body">
                                 <div className="row element-button">
                                     <div className="col-sm-2">
-                                        <Link to="add">
+                                        <Link to="/admin/product/add">
                                             <a className="btn btn-add btn-sm" href="form-add-san-pham.html" title="Thêm"><i className="fas fa-plus" />
                                                 Tạo mới sản phẩm</a>
                                         </Link>
@@ -59,13 +61,11 @@ const ListProduct = () => {
                                     <thead>
                                         <tr>
                                             <th width={10}><input type="checkbox" id="all" /></th>
-                                            <th>Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Ảnh</th>
                                             <th>Số lượng</th>
                                             <th>Giá tiền</th>
-                                            <th>Danh mục</th>
-                                            <th>Chức năng</th>
+                                            <th style={{textAlign: 'center'}}>Chức năng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,16 +73,15 @@ const ListProduct = () => {
                                             return (
                                                 <tr key={index}>
                                                     <td width={10}><input type="checkbox" name="check1" /></td>
-                                                    <td>{index + 1}</td>
                                                     <td>{item.productName}</td>
-                                                    <td><img src={item.file} alt width="50px;" /></td>
+                                                    <td style={{width: 233, height: 100 }} ><img style={{height: 100}} src={item.file} alt /></td>
                                                     <td>{item.productQty}</td>
-                                                    <td>{item.productPriceSale}</td>
-                                                    <td>Bàn ăn</td>
-                                                    <td><button className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item._id)}><i className="fas fa-trash-alt" />
-                                                    </button>
-                                                        <button className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></button>
-                                                    </td>
+                                                    <td>{item.productPrice}</td>
+                                                    <td style={{textAlign: 'center'}}>
+                                                        <button style={{color: 'red', marginRight: 10}}  className="btn btn-primary btn-sm trash" type="button" title="Xóa" onClick={() => onRemove(item._id)}><i className="fas fa-trash-alt" />
+                                                        </button>
+                                                        <Link to={`/admin/product/${item._id}/edit`}style={{color: '#e8c52f'}} className="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP"><i className="fas fa-edit" /></Link>
+                                                        </td>
                                                 </tr>
                                             )
                                         })}

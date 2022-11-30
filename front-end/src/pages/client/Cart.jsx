@@ -1,6 +1,18 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { decrease, increase } from '../../redux/cartSlice';
+import { NavLink} from 'react-router-dom';
 
 const Cart = () => {
+    const dispath = useDispatch()
+    const cart = useSelector((state) => state.cart);
+    console.log(cart)
+    const increaseProduct = (data) => {
+        dispath(increase(data))
+    }
+    const decreaseProduct = (data) => {
+        dispath(decrease(data))
+    }
     return (
         <>
             {/* Breadcrumb Section Begin */}
@@ -31,33 +43,29 @@ const Cart = () => {
                                     <thead>
                                         <tr>
                                             <th>Product</th>
+                                            <th>Name</th>
                                             <th>Quantity</th>
-                                            <th>Total</th>
+                                            <th>Price</th>
                                             <th />
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td className="product__cart__item">
-                                                <div className="product__cart__item__pic">
-                                                    <img src="img/shopping-cart/cart-1.jpg" />
-                                                </div>
-                                                <div className="product__cart__item__text">
-                                                    <h6>T-shirt Contrast Pocket</h6>
-                                                    <h5>$98.49</h5>
-                                                </div>
-                                            </td>
-                                            <td className="quantity__item">
-                                                <div className="quantity">
-                                                    <div className="pro-qty-2">
-                                                        <input type="text" defaultValue={1} />
+                                        {cart?.cart?.map((item) => (
+                                            <tr>
+                                                <td className="product__cart__item">
+                                                    <div style={{width: 20, height: 20}} className="product__cart__item__pic">
+                                                        <img src={item.file} />
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="cart__price">$ 30.00</td>
-                                            <td className="cart__close"><i className="fa fa-close" /></td>
-                                        </tr>
-                                        <tr>
+                                                </td>
+                                                <td className="cart__price">{item.productName}</td>
+                                                <td className="cart__price">{item.quantity}</td>
+                                                <td className="cart__price">${item.productPrice}</td>
+                                                <td className="cart__close"><i className="fa fa-plus" onClick={() => increaseProduct(item)}/><i className="fa fa-minus" onClick={() => decreaseProduct(item)}/></td>
+                                                
+                                            </tr>
+                                        ))}
+                                        
+                                        {/* <tr>
                                             <td className="product__cart__item">
                                                 <div className="product__cart__item__pic">
                                                     <img src="img/shopping-cart/cart-2.jpg" />
@@ -116,7 +124,7 @@ const Cart = () => {
                                             </td>
                                             <td className="cart__price">$ 30.00</td>
                                             <td className="cart__close"><i className="fa fa-close" /></td>
-                                        </tr>
+                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>
@@ -144,10 +152,10 @@ const Cart = () => {
                             <div className="cart__total">
                                 <h6>Cart total</h6>
                                 <ul>
-                                    <li>Subtotal <span>$ 169.50</span></li>
-                                    <li>Total <span>$ 169.50</span></li>
+                                    <li>Subtotal <span>$ {cart?.total}</span></li>
+                                    <li>Total <span>$ {cart?.total}</span></li>
                                 </ul>
-                                <a href="#" className="primary-btn">Proceed to checkout</a>
+                                <NavLink to="/checkout" className="primary-btn">Proceed to checkout</NavLink>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,15 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link, useLocation  } from 'react-router-dom'
+import Cart from '../public/img/icon/cart.png'
+import Search from '../public/img/icon/search.png'
+import Heart from '../public/img/icon/heart.png'
+import Logo from '../public/img/icon/logo.png'
+import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux'
+
 
 const WebsiteLayout = () => {
+    const cart = useSelector(state => state.cart)
   return (
     <>
            <div className="offcanvas-menu-overlay" />
@@ -21,9 +29,9 @@ const WebsiteLayout = () => {
                     </div>
                 </div>
                 <div className="offcanvas__nav__option">
-                    <a href="#" className="search-switch"><img src="img/icon/search.png" alt /></a>
-                    <a href="#"><img src="img/icon/heart.png" alt /></a>
-                    <a href="#"><img src="img/icon/cart.png" alt /> <span>0</span></a>
+                    <a href="#" className="search-switch"><img src={Search}  /></a>
+                    <a href="#"><img src="../public/img/icon/compare.png"  /></a>
+                    <img src={Cart}  /> <Link to='/cart'>cart</Link><span>0</span>
                     <div className="price">$0.00</div>
                 </div>
                 <div id="mobile-menu-wrap" />
@@ -34,7 +42,7 @@ const WebsiteLayout = () => {
             {/* Offcanvas Menu End */}
             {/* Header Section Begin */}
             <header className="header">
-                <div className="header__top">
+                {/* <div className="header__top">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-6 col-md-7">
@@ -60,22 +68,22 @@ const WebsiteLayout = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-3">
                             <div className="header__logo">
-                                <a href="./index.html"><img src="img/logo.png" alt /></a>
+                                <a href="./index.html"><img src={Logo}  /></a>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6">
                             <nav className="header__menu mobile-menu">
                                 <ul>
-                                    <li className="active"><a href="./index.html">Home</a></li>
+                                    <li className="active"><a href="/cart">Home</a></li>
                                     <li><a href="./shop.html">Shop</a></li>
                                     <li><a href="#">Pages</a>
                                         <ul className="dropdown">
-                                            <li><a href="./about.html">About Us</a></li>
+                                            <li><a href="./cart">About Us</a></li>
                                             <li><a href="./shop-details.html">Shop Details</a></li>
                                             <li><a href="./shopping-cart.html">Shopping Cart</a></li>
                                             <li><a href="./checkout.html">Check Out</a></li>
@@ -89,10 +97,10 @@ const WebsiteLayout = () => {
                         </div>
                         <div className="col-lg-3 col-md-3">
                             <div className="header__nav__option">
-                                <a href="#" className="search-switch"><img src="img/icon/search.png" alt /></a>
-                                <a href="#"><img src="img/icon/heart.png" alt /></a>
-                                <a href="#"><img src="img/icon/cart.png" alt /> <span>0</span></a>
-                                <div className="price">$0.00</div>
+                                <a href="#" className="search-switch"><img src={Search}  /></a>
+                                <a href="#"><img src={Heart}  /></a>
+                                <NavLink to="/cart"><img src={Cart} /> <span style={{paddingBottom: 10}}>{cart?.amount}</span></NavLink>
+                                <div className="price">${cart?.total}</div>
                             </div>
                         </div>
                     </div>
@@ -108,10 +116,10 @@ const WebsiteLayout = () => {
                         <div className="col-lg-3 col-md-6 col-sm-6">
                             <div className="footer__about">
                                 <div className="footer__logo">
-                                    <a href="#"><img src="img/footer-logo.png" alt /></a>
+                                    <a href="#"><img src="img/footer-logo.png"  /></a>
                                 </div>
                                 <p>The customer is at the heart of our unique business model, which includes design.</p>
-                                <a href="#"><img src="img/payment.png" alt /></a>
+                                <a href="#"><img src="img/payment.png"  /></a>
                             </div>
                         </div>
                         <div className="col-lg-2 offset-lg-1 col-md-3 col-sm-6">

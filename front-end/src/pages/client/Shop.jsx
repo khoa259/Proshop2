@@ -4,30 +4,51 @@ import Breadcrumb from '../../component/common/Breadcrumb'
 import axios from 'axios'
 import { Debounce } from '../../hooks/UseDebounce'
 import { Pagination } from '../../component/Panagation'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import { addTocart } from '../../redux/cartSlice'
+import Search from '../../public/img/icon/search.png'
+import Heart from '../../public/img/icon/heart.png'
+import Compare from '../../public/img/icon/compare.png'
+
 
 const Shop = () => {
-    const [data, setData] = useState<any>([]);
-    const [searchValue, setSearchValue] = useState<any>([])
+    const [data, setData] = useState([]);
+    console.log(Compare)
+
+    const [searchValue, setSearchValue] = useState([])
     const [page , setPage] = useState(1);
     const [limit, setLimit] = useState(6);
-    const [sort, setSort] = useState("");
+    const [sort, setSort] = useState();
     const { search } = useLocation()
-    console.log(data)
     const debou = Debounce(searchValue, 1000)
-
+    const dispath = useDispatch()
     useEffect(() => {
         const page = new URLSearchParams(search).get('page') || '1';
         setPage(Number(page))
     }, [search])
-
+    const handleCart = (item) =>{
+        console.log(item)
+        dispath(addTocart(item))
+    }
     useEffect(() => {
         const getProducts = async () => {
-            const {data} = await axios.get(`http://localhost:5000/api/products?search=${debou}&limit=${limit}&page=${page}&sort=${sort}`)
+            const {data} = await axios.get(`http://localhost:5000/api/products`,
+            {
+                params: {
+                    search:debou,
+                    limit:limit,
+                    page:page,
+                    sort: sort
+                }
+            })
             setData(data)
         };
         getProducts()
     },[debou,page,sort])
+
+    const cart = useSelector((state) => state.cart);
+    console.log(cart)
 
     const totalPages = useMemo(() => {
         if(!data?.count) return 0;
@@ -40,7 +61,6 @@ const Shop = () => {
     return (
     <>
     <Breadcrumb/>
-     {/* Shop Section Begin */}
     <section className="shop spad">
         <div className="container">
             <div className="row">
@@ -50,7 +70,7 @@ const Shop = () => {
                             <form action="#">
                                 <input
                                 value={searchValue}
-                                onChange={(e:any) => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
+                                onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." />
                                 <button onClick={() => setSearchValue('')}><span className="icon_search" /></button>
                             </form>
                         </div>
@@ -239,21 +259,23 @@ const Shop = () => {
                             <div className="product__item">
                                 <div className="product__item__pic set-bg" style={{backgroundImage: `url(${item.file})`}}>
                                     <ul className="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" /></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" /> <span>Compare</span></a>
+                                        <li><a href="#"><img src={Heart} /></a></li>
+                                        <li><a href="#"><img src={Heart}/></a>
                                         </li>
-                                        <li><a href="#"><img src="img/icon/search.png" /></a></li>
+                                        <li><a href="#"><img src={Search} /></a></li>
                                     </ul>
                                 </div>
-                                <div className="product__item__text">
+                                
+                                 <div className="product__item__text">
                                     <h6>{item.productName}</h6>
-                                    <a href="#" className="add-cart">+ Add To Cart</a>
+                                    <a onClick={() => handleCart(item)} style={{color: 'rgb(254 89 89)'}} className="add-cart">+ Add To Cart</a>
                                     <div className="rating">
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
+                                        
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
                                     </div>
                                     <h5>${item.productPrice}</h5>
                                     <div className="product__color__select">
@@ -305,7 +327,7 @@ const Shop = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div> */}  
                         
                     </div>
                     <div className="row">

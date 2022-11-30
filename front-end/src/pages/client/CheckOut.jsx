@@ -1,6 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import {useForm} from "react-hook-form"
+
 
 const CheckOut = () => {
+    const cart = useSelector(state => state.cart)
+    const {register, handleSubmit , formState: {error}} = useForm()
+    const onSubmit = (data) => {
+        console.log(data, cart)
+    }
     return (
         <>
             {/* Breadcrumb Section Begin */}
@@ -25,99 +33,50 @@ const CheckOut = () => {
             <section className="checkout spad">
                 <div className="container">
                     <div className="checkout__form">
-                        <form action="#">
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="row">
                                 <div className="col-lg-8 col-md-6">
                                     <h6 className="coupon__code"><span className="icon_tag_alt" /> Have a coupon? <a href="#">Click
                                         here</a> to enter your code</h6>
                                     <h6 className="checkout__title">Billing Details</h6>
-                                    <div className="row">
-                                        <div className="col-lg-6">
-                                            <div className="checkout__input">
-                                                <p>Fist Name<span>*</span></p>
-                                                <input type="text" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <div className="checkout__input">
-                                                <p>Last Name<span>*</span></p>
-                                                <input type="text" />
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div className="checkout__input">
-                                        <p>Country<span>*</span></p>
-                                        <input type="text" />
+                                        <p>Name<span>*</span></p>
+                                        <input type="text" {...register('name',  {required: true})} />
                                     </div>
                                     <div className="checkout__input">
                                         <p>Address<span>*</span></p>
-                                        <input type="text" placeholder="Street Address" className="checkout__input__add" />
-                                        <input type="text" placeholder="Apartment, suite, unite ect (optinal)" />
-                                    </div>
-                                    <div className="checkout__input">
-                                        <p>Town/City<span>*</span></p>
-                                        <input type="text" />
-                                    </div>
-                                    <div className="checkout__input">
-                                        <p>Country/State<span>*</span></p>
-                                        <input type="text" />
-                                    </div>
-                                    <div className="checkout__input">
-                                        <p>Postcode / ZIP<span>*</span></p>
-                                        <input type="text" />
+                                        <input  {...register('address',  {required: true})} type="text" placeholder="Street Address" className="checkout__input__add" />
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-6">
                                             <div className="checkout__input">
                                                 <p>Phone<span>*</span></p>
-                                                <input type="text" />
+                                                <input  {...register('phone',  {required: true})} type="text" />
                                             </div>
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="checkout__input">
                                                 <p>Email<span>*</span></p>
-                                                <input type="text" />
+                                                <input type="text"  {...register('email',  {required: true})}/>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="checkout__input__checkbox">
-                                        <label htmlFor="acc">
-                                            Create an account?
-                                            <input type="checkbox" id="acc" />
-                                            <span className="checkmark" />
-                                        </label>
-                                        <p>Create an account by entering the information below. If you are a returning customer
-                                            please login at the top of the page</p>
-                                    </div>
-                                    <div className="checkout__input">
-                                        <p>Account Password<span>*</span></p>
-                                        <input type="text" />
-                                    </div>
-                                    <div className="checkout__input__checkbox">
-                                        <label htmlFor="diff-acc">
-                                            Note about your order, e.g, special noe for delivery
-                                            <input type="checkbox" id="diff-acc" />
-                                            <span className="checkmark" />
-                                        </label>
-                                    </div>
-                                    <div className="checkout__input">
-                                        <p>Order notes<span>*</span></p>
-                                        <input type="text" placeholder="Notes about your order, e.g. special notes for delivery." />
                                     </div>
                                 </div>
                                 <div className="col-lg-4 col-md-6">
                                     <div className="checkout__order">
                                         <h4 className="order__title">Your order</h4>
                                         <div className="checkout__order__products">Product <span>Total</span></div>
-                                        <ul className="checkout__total__products">
-                                            <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                                            <li>02. German chocolate <span>$ 170.0</span></li>
+                                        {cart?.cart?.map((item, index) => (
+                                        <ul key={index} className="checkout__total__products">
+                                            <li>{index + 1}.  {item.productName} <span>$ {item.productPrice}</span></li>
+                                            {/* <li>02. German chocolate <span>$ 170.0</span></li>
                                             <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                            <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                                            <li>04. Cluten free mini dozen <span>$ 110.0</span></li> */}
                                         </ul>
+                                        ))}
                                         <ul className="checkout__total__all">
-                                            <li>Subtotal <span>$750.99</span></li>
-                                            <li>Total <span>$750.99</span></li>
+                                            <li>Subtotal <span>$ {cart?.total}</span></li>
+                                            <li>Total <span>$ {cart?.total}</span></li>
                                         </ul>
                                         <div className="checkout__input__checkbox">
                                             <label htmlFor="acc-or">

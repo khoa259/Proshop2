@@ -1,15 +1,17 @@
 import React from 'react'
+import data from "../../public/img/icon/hero-1.jpg"
 
 const Home = () => {
     return (
         <div>
             <section className="hero">
                 <div className="hero__slider owl-carousel">
-                    <div className="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                    <div className="hero__items set-bg" >
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-5 col-lg-7 col-md-8">
                                     <div className="hero__text">
+                                        <img src="" alt="" />
                                         <h6>Summer Collection</h6>
                                         <h2>Fall - Winter Collections 2030</h2>
                                         <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
@@ -26,7 +28,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="hero__items set-bg" data-setbg="img/hero/hero-2.jpg">
+                    <div className="hero__items set-bg" >
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-5 col-lg-7 col-md-8">
@@ -57,7 +59,7 @@ const Home = () => {
                         <div className="col-lg-7 offset-lg-4">
                             <div className="banner__item">
                                 <div className="banner__item__pic">
-                                    <img src="img/banner/banner-1.jpg" />
+                                    <img src="" />
                                 </div>
                                 <div className="banner__item__text">
                                     <h2>Clothing Collections 2030</h2>
