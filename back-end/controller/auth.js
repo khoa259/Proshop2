@@ -1,74 +1,60 @@
 import User from "../model/user.js";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-export const signupController = async (req, res) => {
-  const { username, email, password } = req.body;
 
+export const signup = async (request, response) => {
+  const { email, name, password } = request.body;
   try {
-    const user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).json({
-        errorMessage: "Email already exists",
+    const exitsUser = await User.findOne({ email }).exec();
+    if (exitsUser) {
+      return response.status(400).json({
+        message: "email da ton tai",
       });
     }
-
-    const newUser = new User();
-    newUser.username = username;
-    newUser.email = email;
-
-    const salt = await bcrypt.genSalt(10);
-    newUser.password = await bcrypt.hash(password, salt);
-
-    await newUser.save();
-
-    res.json({
-      successMessage: "Register success. Please signin.",
+    const user = await new User({ email, name, password }).save();
+    response.json({
+      user: {
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+      },
     });
-  } catch (err) {
-    console.log("signupController error: ", err);
-    res.status(500).json({
-      errorMessage: "Server error",
-    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
-export const signinController = async (req, res) => {
-  const { email, password } = req.body;
+export const signin = async (request, response) => {
+  const { email, password } = request.body;
+  const user = await User.findOne({ email }).exec();
+  if (!user) {
+    return response.status(400).json({
+      message: "User khong ton tai",
+    });
+  }
+  if (!user.authenticate(password)) {
+    return response.status(400).json({
+      message: "Mat khau khong dung",
+    });
+  }
 
+  const token = jwt.sign({ _id: user._id }, "12345", { expiresIn: "365d" });
+
+  response.json({
+    token,
+    user: {
+      _id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    },
+  });
+};
+
+export const ListUser = async (request, response) => {
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({
-        errorMessage: "Invalid credentials",
-      });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({
-        errorMessage: "Invalid credentials",
-      });
-    }
-
-    const payload = {
-      user: {
-        _id: user._id,
-      },
-    };
-
-    jwt.sign(payload, { expiresIn: "365" }, (err, token) => {
-      if (err) console.log("jwt error: ", err);
-      const { _id, username, email, role } = user;
-
-      res.json({
-        token,
-        user: { _id, username, email, role },
-      });
-    });
-  } catch (err) {
-    console.log("signinController error: ", err);
-    res.status(500).json({
-      errorMessage: "Server error",
-    });
+    const user = await User.find({ email }).exec();
+    response.json(user);
+  } catch (error) {
+    response.status(400).json({ message: "khong tim thay data" });
   }
 };
