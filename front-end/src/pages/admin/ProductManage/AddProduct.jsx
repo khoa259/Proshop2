@@ -17,6 +17,8 @@ const AddProduct = () => {
     formdata.append('productName', data.productName)
     formdata.append('productQty', data.productQty)
     formdata.append('productPrice', data.productPrice)
+    formdata.append('productPrice', data.productDesc)
+    formdata.append('productPrice', data.category)
     // Array.from(data.file).map(item => {
       formdata.append('file', data.file[0])
     // })
@@ -58,6 +60,13 @@ const AddProduct = () => {
               <div className="form-group col-md-3">
                 <label className="control-label">Giá bán</label>
                 <input {...register('productPrice', {required: true})} className="form-control" type="number" />
+              </div>
+              <div className="form-group col-md-3">
+                <label className="control-label">Danh muc</label>
+                <select >
+                  <option value="">Điện thoại</option>
+                  <option value="">Laptop</option>
+                </select>
               </div>
               <div className="form-group col-md-3">
                 <label className="control-label">Ảnh sản phẩm</label>
