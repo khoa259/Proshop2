@@ -22,7 +22,8 @@ export const create = async (req, res) => {
         productDesc,
         productPrice,
         productQty,
-        productFile
+        productFile,
+        category,
     } = req.body;
     try {
         // if(!req.files || Object.keys(req.files).length === 0)
@@ -49,6 +50,7 @@ export const create = async (req, res) => {
         })
         let product = new Product();
         product.fileName = productFile;
+        product.category = category;
         product.productName = productName;
         product.productDesc = productDesc;
         product.productPrice = productPrice;
@@ -168,3 +170,18 @@ export const remove = async (req, res) => {
         });
     }
 };
+
+export const deleteManyUser = async(req, res) => {
+    try {
+        const response = await Product.deleteMany({_id:  req.query.id})
+        res.status(200).json({
+            data: response,
+            status: 'OK'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: error,
+            status: 'err'
+        })
+    }
+}
