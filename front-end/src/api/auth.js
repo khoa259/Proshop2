@@ -1,26 +1,10 @@
-import { setCookie, getCookie, deleteCookie } from "./cookies";
-import {
-  setLocalStorage,
-  getLocalStorage,
-  deleteLocalStorage,
-} from "./localStorage";
+import instance from "./instance";
 
-export const setAuthentication = (token, user) => {
-  setCookie("token", token);
-  setLocalStorage("user", user);
+export const signup = (user) => {
+  const url = `/signup`;
+  return instance.post(url, user);
 };
-
-export const isAuthenticated = () => {
-  if (getCookie("token") && getLocalStorage("user")) {
-    return getLocalStorage("user");
-  } else {
-    return false;
-  }
-};
-
-export const logout = (next) => {
-  deleteCookie("token");
-  deleteLocalStorage("user");
-
-  next();
+export const signin = (user) => {
+  const url = `/signin`;
+  return instance.post(url, user);
 };
