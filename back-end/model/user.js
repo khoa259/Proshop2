@@ -1,27 +1,52 @@
 import mongoose from "mongoose";
-
-const UserSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: Number,
-      default: 0,
-    },
+import { createHmac } from "crypto";
+import { v4 as uuidv4 } from "uuid";
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true,
+    lowercase: true,
   },
-  { timestamps: true }
-);
+  name: {
+    type: String,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: Number,
+    default: 0,
+  },
+});
 
-const User = mongoose.model("User", UserSchema);
+userSchema.methods = {
+  authenticate(password) {
+    try {
+      return this.password == this.encrytPassword(password);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
-export default User;
+  encrytPassword(password) {
+    if (!password) return;
+    try {
+      return createHmac("sha256", "12345").update(password).digest("hex");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};
+
+userSchema.pre("save", function (next) {
+  try {
+    this.password = this.encrytPassword(this.password);
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+});
+export default mongoose.model("Users", userSchema);
