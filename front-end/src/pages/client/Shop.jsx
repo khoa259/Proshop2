@@ -57,6 +57,10 @@ const Shop = () => {
     const handlerSort = (e) => {
         setSort(e.target.value)
     }
+
+    const handleFilter = (e) => {
+        console.log(e)
+    }
     return (
     <>
     <Breadcrumb/>
@@ -74,28 +78,24 @@ const Shop = () => {
                             </form>
                         </div>
                         <div className="shop__sidebar__accordion">
-                            <div className="accordion" id="accordionExample">
+                            <div className="accordion" >
                                 <div className="card">
                                     <div className="card-heading">
-                                        <a data-toggle="collapse" >Categories</a>
+                                        <a >Categories</a>
                                     </div>
-                                    <div id="collapseOne" className="collapse show" >
                                         <div className="card-body">
                                             <div className="shop__sidebar__categories">
-                                                <ul className="nice-scroll">
-                                                    <li><a href="#">Men (20)</a></li>
-                                                    <li><a href="#">Women (20)</a></li>
-                                                    <li><a href="#">Bags (20)</a></li>
-                                                    <li><a href="#">Clothing (20)</a></li>
-                                                    <li><a href="#">Shoes (20)</a></li>
-                                                    <li><a href="#">Accessories (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
+                                                <ul onChange={handleFilter} className="nice-scroll">
+                                                    <li><a value="Laptop" >Laptop (20)</a></li>
+                                                    <li><a value="Smartphone">Điện Thoại (20)</a></li>
+                                                    <li><a >Tai nghe (0)</a></li>
+                                                    <li><a >Tivi (0)</a></li>
+                                                    <li><a >Tủ lạnh (0)</a></li>
+                                                    <li><a >Máy giặt (0)</a></li>
+                                                    <li><a >Điều hòa (0)</a></li>
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,8 @@ const Shop = () => {
                                     </div>
                                     </Link>
                                     <div className="product__item__text">
-                                        <Link to={`/shop/detail/${item._id}`}><h6>{item.productName}</h6></Link>
+                                        <div>123123</div>
+                                       <h6>{item.productName}</h6>
                                         <a onClick={() => handleCart(item)} style={{color: 'rgb(254 89 89)'}} className="add-cart">+ Add To Cart</a>
                                         <div className="rating">
                                             

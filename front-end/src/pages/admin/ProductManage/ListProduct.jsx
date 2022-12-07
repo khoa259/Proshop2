@@ -38,16 +38,25 @@ const ListProduct = () => {
         }
     }
     const handleDeleteMany = async () => {
-        await axios.delete(`http://localhost:5000/api/products`, {
-            params: {
-                id: check
+        console.log(check.length)
+       if (check.length <= 1) {
+        console.log("delete")
+        toastr.error('Bạn chưa chọn sản phẩm nào')
+       }
+       else{
+            if(window.confirm('Bạn thực sự muốn xóa')){
+                await axios.delete(`http://localhost:5000/api/products`, {
+                    params: {
+                        id: check
+                    }
+                })
+                setProducts(products.filter((x) => check.every((x2) => x2 !== x._id)));
+                toastr.success('Xóa thành công')
+                // deleteMany({params: {id: check}}).then(() => {
+                //     toastr.success('Xóa thành công')
+                // });
             }
-        })
-        setProducts(products.filter((x) => check.every((x2) => x2 !== x._id)));
-        toastr.success('Xóa thành công')
-        // deleteMany({params: {id: check}}).then(() => {
-        //     toastr.success('Xóa thành công')
-        // });
+       }
     }
     return (
         <div>
