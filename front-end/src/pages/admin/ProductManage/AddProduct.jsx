@@ -2,11 +2,15 @@ import React from 'react'
 import {useForm} from "react-hook-form"
 import { add } from '../../../api/product'
 import "./index.css"
+import toastr from 'toastr'
+import "toastr/build/toastr.min.css";
+import { useNavigate } from 'react-router-dom'
+
 
 const AddProduct = () => {
+  const navigate = useNavigate()
   const {register, handleSubmit, formState: {error}} = useForm();
   const [preview, setPreview] = React.useState(null)
-  console.log(preview)
   const handlePicture = (e) => {
     const objectUrl = URL.createObjectURL(e.target.files[0])
     setPreview(objectUrl)
@@ -17,10 +21,17 @@ const AddProduct = () => {
     formdata.append('productName', data.productName)
     formdata.append('productQty', data.productQty)
     formdata.append('productPrice', data.productPrice)
+    formdata.append('productDesc', data.productDesc)
+    formdata.append('category', data.category)
     // Array.from(data.file).map(item => {
-      formdata.append('file', data.file[0])
+    formdata.append('file', data.file[0])
     // })
-    add(formdata)
+    add(formdata).then(() =>{
+      toastr.success('Thêm thành công')
+      navigate('/admin/product')
+    }).catch(() => {
+      toastr.error('Thêm thất bại')
+    })
   }
   return (
     <div>
@@ -58,6 +69,14 @@ const AddProduct = () => {
               <div className="form-group col-md-3">
                 <label className="control-label">Giá bán</label>
                 <input {...register('productPrice', {required: true})} className="form-control" type="number" />
+              </div>
+              <div className="form-group col-md-3">
+                <label htmlFor="exampleSelect1" className="control-label">Danh mục</label>
+                <select {...register('category', {required: true})} className="form-control" id="exampleSelect1">
+                  <option>-- Chọn danh mục --</option>
+                  <option>Laptop</option>
+                  <option>SmartPhone</option>
+                </select>
               </div>
               <div className="form-group col-md-3">
                 <label className="control-label">Ảnh sản phẩm</label>

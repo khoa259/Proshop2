@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { list, remove } from '../../../api/product'
+import { deleteMany, list, remove } from '../../../api/product'
+import toastr from 'toastr'
+import "toastr/build/toastr.min.css";
+import axios from 'axios';
 
 const ListProduct = () => {
     const [products, setProducts] = useState([]);
-    console.log(products)
+    const [check, setCheck] = useState([])
+    console.log(check)
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await list();
@@ -14,9 +18,45 @@ const ListProduct = () => {
     }, []);
     
     const onRemove = (id) => {
-        console.log(id)
-        remove(id);
-        setProducts(products.filter((i) => i._id !== id));
+        if(window.confirm('Bạn thực sự muốn xóa')){
+            remove(id).then(() =>{
+                toastr.success('Xóa thành công')
+            }).catch(() => {
+                toastr.error('Xóa thất bại')
+            });
+            setProducts(products.filter((i) => i._id !== id));
+        }
+    }
+
+    const handleRemoveMany = (e) => {
+        const {checked, value} = e.target;
+        if (checked) {
+            setCheck([...check, value])
+        }
+        else{
+            setCheck(check?.filter(item => item != value))
+        }
+    }
+    const handleDeleteMany = async () => {
+        console.log(check.length)
+       if (check.length <= 1) {
+        console.log("delete")
+        toastr.error('Bạn chưa chọn sản phẩm nào')
+       }
+       else{
+            if(window.confirm('Bạn thực sự muốn xóa')){
+                await axios.delete(`http://localhost:5000/api/products`, {
+                    params: {
+                        id: check
+                    }
+                })
+                setProducts(products.filter((x) => check.every((x2) => x2 !== x._id)));
+                toastr.success('Xóa thành công')
+                // deleteMany({params: {id: check}}).then(() => {
+                //     toastr.success('Xóa thành công')
+                // });
+            }
+       }
     }
     return (
         <div>
@@ -60,7 +100,12 @@ const ListProduct = () => {
                                 <table className="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                         <tr>
-                                            <th width={10}><input type="checkbox" id="all" /></th>
+                                            <th> 
+                                                <button style={{color: 'red', marginRight: 10}}  
+                                                className="btn btn-primary btn-sm trash" type="button" title="Xóa" 
+                                                onClick={handleDeleteMany}><i className="fas fa-trash-alt" />
+                                                </button>
+                                            </th>
                                             <th>Tên sản phẩm</th>
                                             <th>Ảnh</th>
                                             <th>Số lượng</th>
@@ -72,7 +117,7 @@ const ListProduct = () => {
                                         {products?.map((item, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td width={10}><input type="checkbox" name="check1" /></td>
+                                                    <td width={10}><input type="checkbox" onChange={handleRemoveMany} value={item._id} /></td>
                                                     <td>{item.productName}</td>
                                                     <td style={{width: 233, height: 100 }} ><img style={{height: 100}} src={item.file} alt /></td>
                                                     <td>{item.productQty}</td>

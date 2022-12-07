@@ -28,3 +28,8 @@ export const search = () => {
   const url = `/products?name=${value}`;
   return instance.get(url);
 };
+export const deleteMany = (params) => {
+  const url = `/products?`;
+  return instance.get(url, params);
+};
+

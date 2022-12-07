@@ -9,28 +9,30 @@ import {useDispatch, useSelector} from 'react-redux'
 import { addTocart } from '../../redux/cartSlice'
 import Search from '../../public/img/icon/search.png'
 import Heart from '../../public/img/icon/heart.png'
-import Compare from '../../public/img/icon/compare.png'
+import toastr from 'toastr'
+import "toastr/build/toastr.min.css";
 
 
 const Shop = () => {
     const [data, setData] = useState([]);
-    console.log(Compare)
-
     const [searchValue, setSearchValue] = useState([])
     const [page , setPage] = useState(1);
     const [limit, setLimit] = useState(6);
     const [sort, setSort] = useState();
     const { search } = useLocation()
+
     const debou = Debounce(searchValue, 1000)
     const dispath = useDispatch()
+
     useEffect(() => {
         const page = new URLSearchParams(search).get('page') || '1';
         setPage(Number(page))
     }, [search])
     const handleCart = (item) =>{
-        console.log(item)
         dispath(addTocart(item))
+        toastr.success('Thêm vào giỏ hàng thành công')
     }
+
     useEffect(() => {
         const getProducts = async () => {
             const {data} = await axios.get(`http://localhost:5000/api/products`,
@@ -47,9 +49,6 @@ const Shop = () => {
         getProducts()
     },[debou,page,sort])
 
-    const cart = useSelector((state) => state.cart);
-    console.log(cart)
-
     const totalPages = useMemo(() => {
         if(!data?.count) return 0;
         return Math.ceil(data.count / limit)
@@ -57,6 +56,10 @@ const Shop = () => {
 
     const handlerSort = (e) => {
         setSort(e.target.value)
+    }
+
+    const handleFilter = (e) => {
+        console.log(e)
     }
     return (
     <>
@@ -75,155 +78,24 @@ const Shop = () => {
                             </form>
                         </div>
                         <div className="shop__sidebar__accordion">
-                            <div className="accordion" id="accordionExample">
+                            <div className="accordion" >
                                 <div className="card">
                                     <div className="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                        <a >Categories</a>
                                     </div>
-                                    <div id="collapseOne" className="collapse show" data-parent="#accordionExample">
                                         <div className="card-body">
                                             <div className="shop__sidebar__categories">
-                                                <ul className="nice-scroll">
-                                                    <li><a href="#">Men (20)</a></li>
-                                                    <li><a href="#">Women (20)</a></li>
-                                                    <li><a href="#">Bags (20)</a></li>
-                                                    <li><a href="#">Clothing (20)</a></li>
-                                                    <li><a href="#">Shoes (20)</a></li>
-                                                    <li><a href="#">Accessories (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
+                                                <ul onChange={handleFilter} className="nice-scroll">
+                                                    <li><a value="Laptop" >Laptop (20)</a></li>
+                                                    <li><a value="Smartphone">Điện Thoại (20)</a></li>
+                                                    <li><a >Tai nghe (0)</a></li>
+                                                    <li><a >Tivi (0)</a></li>
+                                                    <li><a >Tủ lạnh (0)</a></li>
+                                                    <li><a >Máy giặt (0)</a></li>
+                                                    <li><a >Điều hòa (0)</a></li>
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
-                                    </div>
-                                    <div id="collapseTwo" className="collapse show" data-parent="#accordionExample">
-                                        <div className="card-body">
-                                            <div className="shop__sidebar__brand">
-                                                <ul>
-                                                    <li><a href="#">Louis Vuitton</a></li>
-                                                    <li><a href="#">Chanel</a></li>
-                                                    <li><a href="#">Hermes</a></li>
-                                                    <li><a href="#">Gucci</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
-                                    </div>
-                                    <div id="collapseThree" className="collapse show" data-parent="#accordionExample">
-                                        <div className="card-body">
-                                            <div className="shop__sidebar__price">
-                                                <ul>
-                                                    <li><a href="#">$0.00 - $50.00</a></li>
-                                                    <li><a href="#">$50.00 - $100.00</a></li>
-                                                    <li><a href="#">$100.00 - $150.00</a></li>
-                                                    <li><a href="#">$150.00 - $200.00</a></li>
-                                                    <li><a href="#">$200.00 - $250.00</a></li>
-                                                    <li><a href="#">250.00+</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFour">Size</a>
-                                    </div>
-                                    <div id="collapseFour" className="collapse show" data-parent="#accordionExample">
-                                        <div className="card-body">
-                                            <div className="shop__sidebar__size">
-                                                <label htmlFor="xs">xs
-                                                    <input type="radio" id="xs" />
-                                                </label>
-                                                <label htmlFor="sm">s
-                                                    <input type="radio" id="sm" />
-                                                </label>
-                                                <label htmlFor="md">m
-                                                    <input type="radio" id="md" />
-                                                </label>
-                                                <label htmlFor="xl">xl
-                                                    <input type="radio" id="xl" />
-                                                </label>
-                                                <label htmlFor="2xl">2xl
-                                                    <input type="radio" id="2xl" />
-                                                </label>
-                                                <label htmlFor="xxl">xxl
-                                                    <input type="radio" id="xxl" />
-                                                </label>
-                                                <label htmlFor="3xl">3xl
-                                                    <input type="radio" id="3xl" />
-                                                </label>
-                                                <label htmlFor="4xl">4xl
-                                                    <input type="radio" id="4xl" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                                    </div>
-                                    <div id="collapseFive" className="collapse show" data-parent="#accordionExample">
-                                        <div className="card-body">
-                                            <div className="shop__sidebar__color">
-                                                <label className="c-1" htmlFor="sp-1">
-                                                    <input type="radio" id="sp-1" />
-                                                </label>
-                                                <label className="c-2" htmlFor="sp-2">
-                                                    <input type="radio" id="sp-2" />
-                                                </label>
-                                                <label className="c-3" htmlFor="sp-3">
-                                                    <input type="radio" id="sp-3" />
-                                                </label>
-                                                <label className="c-4" htmlFor="sp-4">
-                                                    <input type="radio" id="sp-4" />
-                                                </label>
-                                                <label className="c-5" htmlFor="sp-5">
-                                                    <input type="radio" id="sp-5" />
-                                                </label>
-                                                <label className="c-6" htmlFor="sp-6">
-                                                    <input type="radio" id="sp-6" />
-                                                </label>
-                                                <label className="c-7" htmlFor="sp-7">
-                                                    <input type="radio" id="sp-7" />
-                                                </label>
-                                                <label className="c-8" htmlFor="sp-8">
-                                                    <input type="radio" id="sp-8" />
-                                                </label>
-                                                <label className="c-9" htmlFor="sp-9">
-                                                    <input type="radio" id="sp-9" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card">
-                                    <div className="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
-                                    </div>
-                                    <div id="collapseSix" className="collapse show" data-parent="#accordionExample">
-                                        <div className="card-body">
-                                            <div className="shop__sidebar__tags">
-                                                <a href="#">Product</a>
-                                                <a href="#">Bags</a>
-                                                <a href="#">Shoes</a>
-                                                <a href="#">Fashio</a>
-                                                <a href="#">Clothing</a>
-                                                <a href="#">Hats</a>
-                                                <a href="#">Accessories</a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -255,80 +127,45 @@ const Shop = () => {
                     </div>
                     <div className="row">
                         {data?.products?.map((item,index) =>(
-                            <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="product__item">
-                                <div className="product__item__pic set-bg" style={{backgroundImage: `url(${item.file})`}}>
-                                    <ul className="product__hover">
-                                        <li><a href="#"><img src={Heart} /></a></li>
-                                        <li><a href="#"><img src={Heart}/></a>
-                                        </li>
-                                        <li><a href="#"><img src={Search} /></a></li>
-                                    </ul>
-                                </div>
-                                
-                                 <div className="product__item__text">
-                                    <h6>{item.productName}</h6>
-                                    <a onClick={() => handleCart(item)} style={{color: 'rgb(254 89 89)'}} className="add-cart">+ Add To Cart</a>
-                                    <div className="rating">
-                                        
-                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
-                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
-                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
-                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
-                                        <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                            <div key={index} className="col-lg-4 col-md-6 col-sm-6">
+                                <div className="product__item">
+                                    <Link to={`/shop/detail/${item._id}`}><div className="product__item__pic set-bg" style={{backgroundImage: `url(${item.file})`}}>
+                                        <ul className="product__hover">
+                                            <li><a href="#"><img src={Heart} /></a></li>
+                                            <li><a href="#"><img src={Heart}/></a>
+                                            </li>
+                                            <li><a href="#"><img src={Search} /></a></li>
+                                        </ul>
                                     </div>
-                                    <h5>${item.productPrice}</h5>
-                                    <div className="product__color__select">
-                                        <label htmlFor="pc-4">
-                                            <input type="radio" id="pc-4" />
-                                        </label>
-                                        <label className="active black" htmlFor="pc-5">
-                                            <input type="radio" id="pc-5" />
-                                        </label>
-                                        <label className="grey" htmlFor="pc-6">
-                                            <input type="radio" id="pc-6" />
-                                        </label>
+                                    </Link>
+                                    <div className="product__item__text">
+                                        <div>123123</div>
+                                       <h6>{item.productName}</h6>
+                                        <a onClick={() => handleCart(item)} style={{color: 'rgb(254 89 89)'}} className="add-cart">+ Add To Cart</a>
+                                        <div className="rating">
+                                            
+                                            <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                            <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                            <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                            <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                            <i style={{color: '#ffc107', padding: '0 4px'}} className="fa fa-star-o" />
+                                        </div>
+                                        <h5>${item.productPrice}</h5>
+                                        <div className="product__color__select">
+                                            <label htmlFor="pc-4">
+                                                <input type="radio" id="pc-4" />
+                                            </label>
+                                            <label className="active black" htmlFor="pc-5">
+                                                <input type="radio" id="pc-5" />
+                                            </label>
+                                            <label className="grey" htmlFor="pc-6">
+                                                <input type="radio" id="pc-6" />
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         ))}
-                         {/* <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="product__item">
-                                <div className="product__item__pic set-bg" data-setbg="img/product/product-11.jpg">
-                                    <ul className="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" /></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" /> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="#"><img src="img/icon/search.png" /></a></li>
-                                    </ul>
-                                </div>
-                                <div className="product__item__text">
-                                    <h6>Diagonal Textured Cap</h6>
-                                    <a href="#" className="add-cart">+ Add To Cart</a>
-                                    <div className="rating">
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                        <i className="fa fa-star-o" />
-                                    </div>
-                                    <h5>$60.9</h5>
-                                    <div className="product__color__select">
-                                        <label htmlFor="pc-31">
-                                            <input type="radio" id="pc-31" />
-                                        </label>
-                                        <label className="active black" htmlFor="pc-32">
-                                            <input type="radio" id="pc-32" />
-                                        </label>
-                                        <label className="grey" htmlFor="pc-33">
-                                            <input type="radio" id="pc-33" />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}  
-                        
                     </div>
                     <div className="row">
                         <div className="col-lg-12">

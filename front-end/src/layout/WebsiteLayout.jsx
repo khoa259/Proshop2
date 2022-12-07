@@ -91,7 +91,7 @@ const WebsiteLayout = () => {
                                         </ul>
                                     </li>
                                     <li><a href="./blog.html">Blog</a></li>
-                                    <li><a href="./contact.html">Contacts</a></li>
+                                    <li><NavLink  to="/admin/product">Admin</NavLink></li>
                                 </ul>
                             </nav>
                         </div>

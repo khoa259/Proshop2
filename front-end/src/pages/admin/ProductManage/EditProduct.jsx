@@ -10,7 +10,6 @@ const EditProduct = () => {
   const {register, handleSubmit, formState: {error}, reset} = useForm();
   const [preview, setPreview] = React.useState(null)
   const navigate = useNavigate()
-
   React.useEffect(() => {
     const getOne = async () => {
       const {data} = await read(id)
@@ -25,13 +24,12 @@ const EditProduct = () => {
   }
 
   const onSubmit = async (data) => {
-    console.log(data.file)
     const formdata = new FormData()
     formdata.append('productName', data.productName)
     formdata.append('productQty', data.productQty)
     formdata.append('productPrice', data.productPrice)
     // Array.from(data.file).map(item => {
-      formdata.append('file', data.file)
+    formdata.append('file',  data.file)
     // })
     const res = await axios.put(`http://localhost:5000/api/products/${id}`, formdata)
     console.log(res)
